@@ -38,6 +38,119 @@
             overflow: hidden;
         }
         
+        /* Tablet optimizasyonları */
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            body {
+                height: 100vh;
+                overflow: hidden;
+            }
+            
+            .chat-container {
+                height: 100vh;
+                max-height: 100vh;
+            }
+            
+            .chat-header {
+                padding: 24px 32px;
+                min-height: 80px;
+            }
+            
+            .chat-header h1 {
+                font-size: 24px;
+            }
+            
+            .chat-header-logo {
+                width: 44px;
+                height: 44px;
+            }
+            
+            #chat-history {
+                padding: 24px 32px;
+                max-height: calc(100vh - 160px);
+                overflow-y: auto;
+            }
+            
+            .input-area {
+                padding: 24px 32px;
+                min-height: 100px;
+            }
+            
+            .input-wrapper {
+                gap: 16px;
+                max-width: 100%;
+            }
+            
+            #user-input {
+                font-size: 16px;
+                padding: 16px 20px;
+                min-height: 56px;
+                max-height: 200px;
+            }
+            
+            #image-button {
+                padding: 16px 20px;
+                font-size: 16px;
+                min-width: 60px;
+            }
+            
+            #send-button {
+                padding: 16px 32px;
+                font-size: 16px;
+                min-width: 100px;
+            }
+            
+            .message-wrapper {
+                margin-bottom: 28px;
+                padding: 20px;
+            }
+            
+            .message-sender {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+            
+            .message-content {
+                font-size: 16px;
+                line-height: 1.8;
+            }
+            
+            .message-content h1 {
+                font-size: 28px;
+                margin: 28px 0 20px 0;
+            }
+            
+            .message-content h2 {
+                font-size: 24px;
+                margin: 24px 0 16px 0;
+            }
+            
+            .message-content h3 {
+                font-size: 20px;
+                margin: 20px 0 12px 0;
+            }
+        }
+        
+        /* iPad Pro ve büyük tabletler */
+        @media screen and (min-width: 1024px) and (max-width: 1366px) {
+            .chat-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            }
+            
+            .chat-header {
+                padding: 28px 40px;
+            }
+            
+            #chat-history {
+                padding: 28px 40px;
+            }
+            
+            .input-area {
+                padding: 28px 40px;
+            }
+        }
+        
         .chat-container {
             width: 100vw;
             height: 100vh;
@@ -253,6 +366,8 @@
             display: flex;
             gap: 10px;
             align-items: flex-end;
+            width: 100%;
+            flex-wrap: nowrap;
         }
         
         .input-container {
@@ -305,6 +420,8 @@
         .input-row {
             display: flex;
             gap: 8px;
+            width: 100%;
+            flex-wrap: nowrap;
         }
         
         #user-input {
@@ -319,6 +436,8 @@
             resize: none;
             min-height: 48px;
             max-height: 200px;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         #user-input:focus {
@@ -338,6 +457,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
+            min-width: 50px;
         }
         
         #image-button:hover {
@@ -359,6 +480,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s;
+            flex-shrink: 0;
+            min-width: 80px;
         }
         
         #send-button:hover:not(:disabled) {
