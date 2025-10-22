@@ -62,6 +62,9 @@
             .chat-header-logo {
                 width: 44px;
                 height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
             #chat-history {
@@ -128,6 +131,36 @@
                 font-size: 20px;
                 margin: 20px 0 12px 0;
             }
+            
+            .connection-status {
+                bottom: 160px;
+                right: 24px;
+                font-size: 13px;
+                padding: 10px 18px;
+            }
+            
+            .stop-button {
+                bottom: 220px;
+                right: 24px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .stop-button svg {
+                width: 18px;
+                height: 18px;
+            }
+            
+            .scroll-to-bottom {
+                bottom: 160px;
+                width: 44px;
+                height: 44px;
+            }
+            
+            .scroll-to-bottom svg {
+                width: 22px;
+                height: 22px;
+            }
         }
         
         /* iPad Pro ve büyük tabletler */
@@ -171,9 +204,9 @@
         .chat-header-logo {
             width: 36px;
             height: 36px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #10a37f 0%, #0d8c6a 100%);
-            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .chat-header-logo img {
@@ -188,11 +221,164 @@
             color: #202123;
         }
         
+        .chat-main {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
         #chat-history {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
             background: #ffffff;
+        }
+        
+        /* Right sidebar for animations */
+        .right-sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #f7f7f8 0%, #ffffff 100%);
+            border-left: 1px solid #e5e5e5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-content {
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .sidebar-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+        
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #202123;
+            margin-bottom: 8px;
+        }
+        
+        .sidebar-description {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        /* Background animated shapes */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        
+        .shape-1 {
+            width: 150px;
+            height: 150px;
+            background: #10a37f;
+            top: -50px;
+            right: -50px;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .shape-2 {
+            width: 100px;
+            height: 100px;
+            background: #0ea5e9;
+            bottom: -30px;
+            left: -30px;
+            animation: rotate 15s linear infinite reverse;
+        }
+        
+        .shape-3 {
+            width: 80px;
+            height: 80px;
+            background: #8b5cf6;
+            top: 50%;
+            left: 10%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Thinking animation */
+        .thinking-animation {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .thinking-dot {
+            width: 12px;
+            height: 12px;
+            background: #10a37f;
+            border-radius: 50%;
+            animation: thinking 1.4s ease-in-out infinite;
+        }
+        
+        .thinking-dot:nth-child(1) { animation-delay: 0s; }
+        .thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+        .thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes thinking {
+            0%, 60%, 100% { 
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            30% { 
+                transform: scale(1.3);
+                opacity: 1;
+            }
+        }
+        
+        /* Particle effect */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #10a37f;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particle 3s ease-out infinite;
+        }
+        
+        @keyframes particle {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1);
+            }
+        }
+        
+        /* Hide sidebar on mobile and tablet */
+        @media screen and (max-width: 1024px) {
+            .right-sidebar {
+                display: none;
+            }
         }
         
         .message-wrapper {
@@ -554,17 +740,620 @@
         #chat-history::-webkit-scrollbar-thumb:hover {
             background: #a8a8b3;
         }
+        
+        /* Typing indicator - Gelişmiş loading animasyonu */
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 16px;
+            background: #f0f9ff;
+            border-radius: 18px;
+            margin: 8px 0;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #10a37f;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.7; }
+            30% { transform: translateY(-10px); opacity: 1; }
+        }
+        
+        /* Connection status indicator */
+        .connection-status {
+            position: fixed;
+            bottom: 140px;
+            right: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            gap: 6px;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .connection-status.online {
+            background: #d1fae5;
+            color: #065f46;
+            display: flex;
+        }
+        
+        .connection-status.offline {
+            background: #fee2e2;
+            color: #991b1b;
+            display: flex;
+        }
+        
+        .connection-status.slow {
+            background: #fef3c7;
+            color: #92400e;
+            display: flex;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        /* Retry button */
+        .retry-button {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+        
+        .retry-button:hover {
+            background: #dc2626;
+        }
+        
+        /* Smooth streaming effect */
+        .streaming-text {
+            animation: fadeIn 0.2s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Network quality indicator */
+        .network-quality {
+            font-size: 11px;
+            color: #6b7280;
+            padding: 4px 8px;
+            background: #f3f4f6;
+            border-radius: 4px;
+            display: inline-block;
+            margin-left: 8px;
+        }
+        
+        /* Message actions */
+        .message-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .message-wrapper:hover .message-actions {
+            opacity: 1;
+        }
+        
+        .action-button {
+            padding: 6px 12px;
+            background: #f7f7f8;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #6b7280;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .action-button:hover {
+            background: #ececf1;
+            color: #202123;
+            border-color: #d9d9e3;
+        }
+        
+        .action-button svg {
+            width: 14px;
+            height: 14px;
+        }
+        
+        .action-button.success {
+            background: #d1fae5;
+            color: #065f46;
+            border-color: #a7f3d0;
+        }
+        
+        /* Stop generation button */
+        .stop-button {
+            position: fixed;
+            bottom: 200px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #6b7280;
+            border: 1px solid #e5e5e5;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            transition: all 0.2s;
+            backdrop-filter: blur(8px);
+        }
+        
+        .stop-button:hover {
+            background: rgba(255, 255, 255, 1);
+            color: #ef4444;
+            border-color: #fee2e2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+        
+        .stop-button.show {
+            display: flex;
+        }
+        
+        .stop-button svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        /* Scroll to bottom button */
+        .scroll-to-bottom {
+            position: fixed;
+            bottom: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 100;
+            transition: all 0.2s;
+            color: #6b7280;
+        }
+        
+        .scroll-to-bottom:hover {
+            background: #10a37f;
+            color: white;
+            border-color: #10a37f;
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 163, 127, 0.2);
+        }
+        
+        .scroll-to-bottom.show {
+            display: flex;
+        }
+        
+        .scroll-to-bottom svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Suggested prompts */
+        .suggested-prompts {
+            display: flex;
+            gap: 8px;
+            padding: 12px 20px;
+            overflow-x: auto;
+            background: #f7f7f8;
+            border-top: 1px solid #e5e5e5;
+            scrollbar-width: none;
+        }
+        
+        .suggested-prompts::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .prompt-chip {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #d9d9e3;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #353740;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        
+        .prompt-chip:hover {
+            background: #10a37f;
+            color: white;
+            border-color: #10a37f;
+            transform: translateY(-1px);
+        }
+        
+        /* Code block improvements */
+        .message-content pre {
+            position: relative;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: #1e293b;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: -8px;
+        }
+        
+        .code-language {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .copy-code-button {
+            padding: 4px 8px;
+            background: #334155;
+            border: 1px solid #475569;
+            border-radius: 4px;
+            color: #e2e8f0;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .copy-code-button:hover {
+            background: #475569;
+            color: white;
+        }
+        
+        /* Welcome screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+            min-height: 400px;
+        }
+        
+        .welcome-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 24px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #202123;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #10a37f 0%, #0d8c6a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .welcome-subtitle {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 32px;
+        }
+        
+        .welcome-suggestions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .suggestion-card {
+            padding: 16px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .suggestion-card:hover {
+            border-color: #10a37f;
+            box-shadow: 0 4px 12px rgba(16, 163, 127, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .suggestion-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .suggestion-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #202123;
+            margin-bottom: 4px;
+        }
+        
+        .suggestion-text {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        /* Export menu */
+        .export-menu {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 8px;
+            display: none;
+            z-index: 999;
+            min-width: 200px;
+        }
+        
+        .export-menu.show {
+            display: block;
+        }
+        
+        .export-option {
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #353740;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        
+        .export-option:hover {
+            background: #f7f7f8;
+        }
+        
+        /* Header actions */
+        .header-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .header-button {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid #e5e5e5;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+        
+        .header-button:hover {
+            background: #f7f7f8;
+            color: #10a37f;
+            border-color: #d9d9e3;
+        }
+        
+        .header-button svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        /* Mobile optimizations */
+        @media screen and (max-width: 767px) {
+            .connection-status {
+                bottom: 120px;
+                right: 12px;
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+            
+            .stop-button {
+                bottom: 180px;
+                right: 12px;
+                width: 32px;
+                height: 32px;
+            }
+            
+            .stop-button svg {
+                width: 14px;
+                height: 14px;
+            }
+            
+            .scroll-to-bottom {
+                bottom: 120px;
+                width: 36px;
+                height: 36px;
+            }
+            
+            .scroll-to-bottom svg {
+                width: 18px;
+                height: 18px;
+            }
+            
+            .header-actions {
+                gap: 6px;
+            }
+            
+            .header-button {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .header-button svg {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .export-menu {
+                top: 70px;
+                right: 10px;
+            }
+            
+            .chat-header {
+                padding: 16px;
+            }
+            
+            .chat-header h1 {
+                font-size: 18px;
+            }
+            
+            .chat-header-logo {
+                width: 32px;
+                height: 32px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Connection Status Indicator -->
+    <div class="connection-status" id="connection-status">
+        <span class="status-dot"></span>
+        <span id="connection-text">Çevrimiçi</span>
+    </div>
+    
     <div class="chat-container">
         <div class="chat-header">
             <div class="chat-header-logo">
                 <img src="tahsinzeka-logo.png" alt="TahsinZeka Logo">
             </div>
             <h1>TahsinZeka</h1>
+            <div class="header-actions">
+                <button class="header-button" id="export-button" title="Dışa Aktar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </button>
+                <button class="header-button" id="clear-button" title="Sohbeti Temizle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
-        <div id="chat-history"></div>
+        
+        <!-- Export Menu -->
+        <div class="export-menu" id="export-menu">
+            <div class="export-option" onclick="exportChat('markdown')">
+                <span>📄</span> Markdown olarak indir
+            </div>
+            <div class="export-option" onclick="exportChat('text')">
+                <span>📝</span> Text olarak indir
+            </div>
+            <div class="export-option" onclick="exportChat('json')">
+                <span>💾</span> JSON olarak indir
+            </div>
+        </div>
+        
+        <!-- Stop Generation Button -->
+        <button class="stop-button" id="stop-button" title="Yanıtı durdur">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+            </svg>
+        </button>
+        
+        <!-- Scroll to Bottom Button -->
+        <button class="scroll-to-bottom" id="scroll-to-bottom" title="En alta git">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="7 13 12 18 17 13"></polyline>
+                <polyline points="7 6 12 11 17 6"></polyline>
+            </svg>
+        </button>
+        
+        <div class="chat-main">
+            <div id="chat-history"></div>
+            
+            <!-- Right Sidebar -->
+            <div class="right-sidebar" id="right-sidebar">
+                <!-- Background shapes -->
+                <div class="bg-shape shape-1"></div>
+                <div class="bg-shape shape-2"></div>
+                <div class="bg-shape shape-3"></div>
+                
+                <!-- Dynamic content -->
+                <div class="sidebar-content" id="sidebar-content">
+                    <div class="sidebar-icon">🧠</div>
+                    <div class="sidebar-title">TahsinZeka</div>
+                    <div class="sidebar-description">Size nasıl yardımcı olabilirim?</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Suggested Prompts -->
+        <div class="suggested-prompts" id="suggested-prompts" style="display: none;">
+            <div class="prompt-chip" onclick="useSuggestedPrompt('Bu kod nasıl çalışır?')">🔍 Kod açıkla</div>
+            <div class="prompt-chip" onclick="useSuggestedPrompt('Bunu özetler misin?')">📋 Özetle</div>
+            <div class="prompt-chip" onclick="useSuggestedPrompt('Daha detaylı anlat')">📖 Detaylandır</div>
+            <div class="prompt-chip" onclick="useSuggestedPrompt('Alternatif çözüm öner')">💡 Alternatif</div>
+            <div class="prompt-chip" onclick="useSuggestedPrompt('Örnek ver')">🎯 Örnek</div>
+        </div>
         <div class="input-area">
             <div class="input-wrapper">
                 <div class="input-container">
@@ -600,9 +1389,445 @@
         const imagePreviewContainer = document.getElementById('image-preview-container');
         const imagePreview = document.getElementById('image-preview');
         const removeImageButton = document.getElementById('remove-image');
+        const connectionStatus = document.getElementById('connection-status');
+        const connectionText = document.getElementById('connection-text');
+        const stopButton = document.getElementById('stop-button');
+        const exportButton = document.getElementById('export-button');
+        const exportMenu = document.getElementById('export-menu');
+        const clearButton = document.getElementById('clear-button');
+        const suggestedPrompts = document.getElementById('suggested-prompts');
+        const scrollToBottomButton = document.getElementById('scroll-to-bottom');
+        const sidebarContent = document.getElementById('sidebar-content');
 
         let selectedImage = null;
         let selectedImageUrl = null;
+        let isStreaming = false;
+        let streamStartTime = 0;
+        let lastStreamTime = 0;
+        let stopStreamingFlag = false;
+        let currentStreamController = null;
+        
+        // Network monitoring
+        let networkQuality = 'good'; // good, slow, offline
+        let requestTimeout = null;
+        
+        // Local storage key
+        const STORAGE_KEY = 'tahsinzeka_chat_history';
+        
+        // Auto-scroll management
+        let isUserScrolling = false;
+        let scrollTimeout = null;
+
+        // Network quality monitoring
+        function updateConnectionStatus(status) {
+            connectionStatus.className = 'connection-status ' + status;
+            
+            if (status === 'online') {
+                connectionText.textContent = 'Çevrimiçi';
+                networkQuality = 'good';
+            } else if (status === 'slow') {
+                connectionText.textContent = 'Yavaş bağlantı';
+                networkQuality = 'slow';
+            } else if (status === 'offline') {
+                connectionText.textContent = 'Bağlantı yok';
+                networkQuality = 'offline';
+            }
+            
+            // Auto-hide after 3 seconds if online
+            if (status === 'online') {
+                setTimeout(() => {
+                    connectionStatus.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        // Monitor online/offline status
+        window.addEventListener('online', () => updateConnectionStatus('online'));
+        window.addEventListener('offline', () => updateConnectionStatus('offline'));
+        
+        // Check network quality with timing
+        function checkNetworkQuality(responseTime) {
+            if (responseTime > 3000) {
+                updateConnectionStatus('slow');
+            } else if (responseTime > 1000) {
+                networkQuality = 'medium';
+            } else {
+                networkQuality = 'good';
+            }
+        }
+        
+        // Check if user is at bottom of chat
+        function isAtBottom() {
+            const threshold = 100; // 100px threshold
+            const position = chatHistory.scrollTop + chatHistory.clientHeight;
+            const bottom = chatHistory.scrollHeight;
+            return bottom - position < threshold;
+        }
+        
+        // Smooth scroll to bottom (only if user hasn't scrolled up)
+        function smoothScrollToBottom(force = false) {
+            // If streaming and user scrolled up, don't auto-scroll
+            if (isStreaming && !force && isUserScrolling) {
+                return;
+            }
+            
+            // Only auto-scroll if user is near bottom
+            if (force || isAtBottom()) {
+                chatHistory.scrollTo({
+                    top: chatHistory.scrollHeight,
+                    behavior: 'smooth'
+                });
+                isUserScrolling = false;
+            }
+        }
+        
+        // Detect user scroll
+        chatHistory.addEventListener('scroll', () => {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            
+            // Show/hide scroll to bottom button
+            if (!isAtBottom()) {
+                scrollToBottomButton.classList.add('show');
+                
+                // Mark that user is scrolling if streaming
+                if (isStreaming) {
+                    isUserScrolling = true;
+                }
+            } else {
+                scrollToBottomButton.classList.remove('show');
+                
+                // Reset if user scrolls back to bottom
+                scrollTimeout = setTimeout(() => {
+                    if (isAtBottom()) {
+                        isUserScrolling = false;
+                    }
+                }, 100);
+            }
+        });
+        
+        // Update right sidebar based on topic
+        function updateSidebar(message) {
+            if (!sidebarContent) return;
+            
+            const lowerMessage = message.toLowerCase();
+            let icon = '🧠';
+            let title = 'Düşünüyorum...';
+            let description = 'Sorunuzu analiz ediyorum';
+            let showThinking = true;
+            
+            // Detect topic
+            if (lowerMessage.match(/\d+|hesap|çarp|böl|topla|çıkar|matematik|formül|denklem|integral|türev|geometri/)) {
+                icon = '🔢';
+                title = 'Matematik Modu';
+                description = 'Hesaplama ve formüllerle çözüyorum';
+            } else if (lowerMessage.match(/kod|program|javascript|python|html|css|function|class|array/)) {
+                icon = '💻';
+                title = 'Kod Analizi';
+                description = 'Kodu inceliyorum ve açıklıyorum';
+            } else if (lowerMessage.match(/görsel|resim|foto|image|analiz et/)) {
+                icon = '🖼️';
+                title = 'Görsel Analiz';
+                description = 'Görseli detaylı inceliyorum';
+            } else if (lowerMessage.match(/nasıl|neden|ne|nedir|açıkla|anlat/)) {
+                icon = '💡';
+                title = 'Açıklama Modu';
+                description = 'Detaylı ve anlaşılır açıklıyorum';
+            } else if (lowerMessage.match(/öner|tavsiye|fikir|alternatif/)) {
+                icon = '🎯';
+                title = 'Öneri Modu';
+                description = 'Alternatifler üretiyorum';
+            } else if (lowerMessage.match(/yaz|oluştur|yarat|hazırla/)) {
+                icon = '✍️';
+                title = 'Yaratıcı Mod';
+                description = 'Özgün içerik üretiyorum';
+            } else if (lowerMessage.match(/çevir|translate|türkçe|ingilizce/)) {
+                icon = '🌐';
+                title = 'Çeviri Modu';
+                description = 'Diller arası çeviri yapıyorum';
+            } else if (lowerMessage.match(/düzelt|kontrol|hata|yanlış/)) {
+                icon = '✅';
+                title = 'Düzeltme Modu';
+                description = 'Hataları tespit edip düzeltiyorum';
+            }
+            
+            // Update sidebar with animation
+            sidebarContent.style.opacity = '0';
+            sidebarContent.style.transform = 'translateY(10px)';
+            
+            setTimeout(() => {
+                sidebarContent.innerHTML = `
+                    <div class="sidebar-icon">${icon}</div>
+                    <div class="sidebar-title">${title}</div>
+                    <div class="sidebar-description">${description}</div>
+                    ${showThinking ? '<div class="thinking-animation"><div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div></div>' : ''}
+                `;
+                
+                sidebarContent.style.opacity = '1';
+                sidebarContent.style.transform = 'translateY(0)';
+            }, 200);
+        }
+        
+        // Reset sidebar to default
+        function resetSidebar() {
+            if (!sidebarContent) return;
+            
+            sidebarContent.style.opacity = '0';
+            setTimeout(() => {
+                sidebarContent.innerHTML = `
+                    <div class="sidebar-icon">🧠</div>
+                    <div class="sidebar-title">TahsinZeka</div>
+                    <div class="sidebar-description">Size nasıl yardımcı olabilirim?</div>
+                `;
+                sidebarContent.style.opacity = '1';
+            }, 200);
+        }
+        
+        // Add CSS transition to sidebar content
+        if (sidebarContent) {
+            sidebarContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        }
+        
+        // Create typing indicator
+        function createTypingIndicator() {
+            const indicator = document.createElement('div');
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
+            return indicator;
+        }
+        
+        // Show welcome screen
+        function showWelcomeScreen() {
+            const welcomeHTML = `
+                <div class="welcome-screen">
+                    <img src="tahsinzeka-logo.png" alt="TahsinZeka" class="welcome-logo">
+                    <h2 class="welcome-title">Hoş Geldiniz! 👋</h2>
+                    <p class="welcome-subtitle">Size nasıl yardımcı olabilirim?</p>
+                    <div class="welcome-suggestions">
+                        <div class="suggestion-card" onclick="useSuggestedPrompt('Python ile web scraping nasıl yapılır?')">
+                            <div class="suggestion-icon">💻</div>
+                            <div class="suggestion-title">Kod Yardımı</div>
+                            <div class="suggestion-text">Python ile web scraping nasıl yapılır?</div>
+                        </div>
+                        <div class="suggestion-card" onclick="useSuggestedPrompt('Yapay zeka nedir ve nasıl çalışır?')">
+                            <div class="suggestion-icon">🤖</div>
+                            <div class="suggestion-title">Öğrenme</div>
+                            <div class="suggestion-text">Yapay zeka nedir ve nasıl çalışır?</div>
+                        </div>
+                        <div class="suggestion-card" onclick="useSuggestedPrompt('Bir makale özetler misin?')">
+                            <div class="suggestion-icon">📝</div>
+                            <div class="suggestion-title">Özet</div>
+                            <div class="suggestion-text">Bir makale özetler misin?</div>
+                        </div>
+                        <div class="suggestion-card" onclick="useSuggestedPrompt('Görsel yükleyip analiz et')">
+                            <div class="suggestion-icon">🖼️</div>
+                            <div class="suggestion-title">Görsel Analiz</div>
+                            <div class="suggestion-text">Görsel yükleyip analiz et</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            chatHistory.innerHTML = welcomeHTML;
+        }
+        
+        // Use suggested prompt
+        function useSuggestedPrompt(prompt) {
+            userInput.value = prompt;
+            userInput.focus();
+            userInput.style.height = 'auto';
+            userInput.style.height = Math.min(userInput.scrollHeight, 200) + 'px';
+        }
+        
+        // Copy to clipboard
+        async function copyToClipboard(text, button) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Kopyalandı';
+                button.classList.add('success');
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('success');
+                }, 2000);
+            } catch (err) {
+                console.error('Copy failed:', err);
+            }
+        }
+        
+        // Create message actions
+        function createMessageActions(message, isAI = false) {
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'message-actions';
+            
+            if (isAI) {
+                actionsDiv.innerHTML = `
+                    <button class="action-button" onclick="copyMessage(this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Kopyala
+                    </button>
+                    <button class="action-button" onclick="regenerateResponse(this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                        Yeniden Oluştur
+                    </button>
+                `;
+            } else {
+                actionsDiv.innerHTML = `
+                    <button class="action-button" onclick="copyMessage(this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Kopyala
+                    </button>
+                `;
+            }
+            
+            return actionsDiv;
+        }
+        
+        // Copy message function
+        function copyMessage(button) {
+            const messageWrapper = button.closest('.message-wrapper');
+            const messageContent = messageWrapper.querySelector('.message-content');
+            const text = messageContent.innerText;
+            copyToClipboard(text, button);
+        }
+        
+        // Regenerate response
+        function regenerateResponse(button) {
+            const messageWrapper = button.closest('.message-wrapper');
+            const previousUserMessage = messageWrapper.previousElementSibling;
+            
+            if (previousUserMessage && previousUserMessage.classList.contains('user-message')) {
+                const userText = previousUserMessage.querySelector('.message-content').innerText;
+                // Remove AI message
+                messageWrapper.remove();
+                // Resend user message
+                sendMessage(userText, null);
+            }
+        }
+        
+        // Export chat functions
+        function exportChat(format) {
+            exportMenu.classList.remove('show');
+            
+            const messages = [];
+            document.querySelectorAll('.message-wrapper').forEach(wrapper => {
+                const sender = wrapper.querySelector('.message-sender').textContent;
+                const content = wrapper.querySelector('.message-content').innerText;
+                messages.push({ sender, content });
+            });
+            
+            let output = '';
+            let filename = 'tahsinzeka-chat';
+            let mimeType = 'text/plain';
+            
+            if (format === 'markdown') {
+                output = messages.map(m => `## ${m.sender}\n\n${m.content}\n\n---\n`).join('\n');
+                filename += '.md';
+                mimeType = 'text/markdown';
+            } else if (format === 'text') {
+                output = messages.map(m => `${m.sender}:\n${m.content}\n\n`).join('\n');
+                filename += '.txt';
+            } else if (format === 'json') {
+                output = JSON.stringify({ messages, exportedAt: new Date().toISOString() }, null, 2);
+                filename += '.json';
+                mimeType = 'application/json';
+            }
+            
+            const blob = new Blob([output], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Clear chat
+        function clearChat() {
+            if (confirm('Tüm sohbet geçmişini silmek istediğinize emin misiniz?')) {
+                chatHistory.innerHTML = '';
+                conversationHistory = [];
+                localStorage.removeItem(STORAGE_KEY);
+                showWelcomeScreen();
+                resetSidebar();
+            }
+        }
+        
+        // Save chat to localStorage
+        function saveChat() {
+            try {
+                const data = {
+                    history: conversationHistory,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            } catch (e) {
+                console.error('Failed to save chat:', e);
+            }
+        }
+        
+        // Load chat from localStorage
+        function loadChat() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    // Only load if less than 24 hours old
+                    if (Date.now() - parsed.timestamp < 24 * 60 * 60 * 1000) {
+                        conversationHistory = parsed.history || [];
+                        // Render messages
+                        conversationHistory.forEach((msg, index) => {
+                            if (index % 2 === 0) { // User message
+                                addMessage('Siz', msg.content);
+                            } else { // AI message
+                                const { textDiv } = addMessage('TahsinZeka', '', null, true);
+                                if (typeof marked !== 'undefined') {
+                                    textDiv.innerHTML = marked.parse(msg.content);
+                                } else {
+                                    textDiv.innerHTML = msg.content.replace(/\n/g, '<br>');
+                                }
+                                textDiv.parentElement.parentElement.appendChild(createMessageActions(msg.content, true));
+                            }
+                        });
+                        return true;
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to load chat:', e);
+            }
+            return false;
+        }
+        
+        // Stop generation
+        function stopGeneration() {
+            stopStreamingFlag = true;
+            stopButton.classList.remove('show');
+            if (currentStreamController) {
+                currentStreamController.abort();
+            }
+            resetSidebar();
+        }
+        
+        // Toggle export menu
+        function toggleExportMenu() {
+            exportMenu.classList.toggle('show');
+        }
+        
+        // Close export menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!exportButton.contains(e.target) && !exportMenu.contains(e.target)) {
+                exportMenu.classList.remove('show');
+            }
+        });
 
         // Markdown yapılandırması
         if (typeof marked !== 'undefined') {
@@ -679,51 +1904,95 @@
                 textDiv.textContent = message;
             } else {
                 textDiv.innerHTML = message;
+                textDiv.className = 'streaming-text';
             }
             contentDiv.appendChild(textDiv);
             
             messageWrapper.appendChild(senderDiv);
             messageWrapper.appendChild(contentDiv);
+            
+            // Add message actions (non-streaming messages)
+            if (!isStreaming && message) {
+                const actions = createMessageActions(message, sender !== 'Siz');
+                messageWrapper.appendChild(actions);
+            }
+            
             chatHistory.appendChild(messageWrapper);
-            chatHistory.scrollTop = chatHistory.scrollHeight;
+            
+            // Smooth scroll
+            smoothScrollToBottom();
             
             if (isStreaming) {
-                return textDiv;
+                return { textDiv, messageWrapper };
             }
         }
 
         // Konuşma geçmişi için array
         let conversationHistory = [];
+        
+        // Retry helper function
+        async function retryRequest(requestFn, maxRetries = 3, delay = 1000) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    return await requestFn();
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error;
+                    
+                    // Show retry notification
+                    updateConnectionStatus('slow');
+                    connectionText.textContent = `Yeniden deneniyor... (${i + 1}/${maxRetries})`;
+                    
+                    await new Promise(resolve => setTimeout(resolve, delay * (i + 1)));
+                }
+            }
+        }
 
-        async function sendMessage() {
-            const message = userInput.value.trim();
-            const hasImage = selectedImageUrl !== null;
+        async function sendMessage(retryMessage = null, retryImageUrl = null) {
+            const message = retryMessage || userInput.value.trim();
+            const hasImage = retryImageUrl || selectedImageUrl !== null;
             
             if (!message && !hasImage) return;
 
-            // Mesajı ekle (görsel ile birlikte)
-            addMessage('Siz', message || '📸 Görsel analizi istendi', selectedImageUrl);
-            
-            const currentImageUrl = selectedImageUrl;
-            
-            userInput.value = '';
-            userInput.style.height = 'auto';
-            sendButton.disabled = true;
-            
-            // Görseli temizle
-            selectedImage = null;
-            selectedImageUrl = null;
-            imageInput.value = '';
-            imagePreviewContainer.classList.remove('show');
-
-            // Görsel analizi göstergesi ekle
-            const responseDiv = addMessage('TahsinZeka', '', null, true);
-            
-            // Analiz göstergesi ekle
-            if (currentImageUrl) {
-                responseDiv.innerHTML = '<div class="analyzing-indicator">Görsel analiz ediliyor...</div>';
+            // Mesajı ekle (sadece retry değilse)
+            if (!retryMessage) {
+                addMessage('Siz', message || '📸 Görsel analizi istendi', selectedImageUrl);
+                // Kullanıcı mesajı eklendikten sonra zorla en alta kaydır
+                smoothScrollToBottom(true);
+                // Sidebar'ı konuya göre güncelle
+                updateSidebar(message || 'görsel analizi');
             }
+            
+            const currentImageUrl = retryImageUrl || selectedImageUrl;
+            
+            if (!retryMessage) {
+                userInput.value = '';
+                userInput.style.height = 'auto';
+            }
+            sendButton.disabled = true;
+            isStreaming = true;
+            streamStartTime = Date.now();
+            
+            // Görseli temizle (sadece retry değilse)
+            if (!retryMessage) {
+                selectedImage = null;
+                selectedImageUrl = null;
+                imageInput.value = '';
+                imagePreviewContainer.classList.remove('show');
+            }
+
+            // AI yanıt message wrapper oluştur
+            const { textDiv, messageWrapper } = addMessage('TahsinZeka', '', null, true);
+            // AI placeholder eklendikten sonra da en alta kaydır
+            smoothScrollToBottom(true);
+            
+            // Typing indicator ekle
+            const typingIndicator = createTypingIndicator();
+            textDiv.appendChild(typingIndicator);
+            
             let fullResponse = '';
+            let lastUpdateTime = Date.now();
+            let buffer = '';
+            const BUFFER_DELAY = 50; // ms - smooth rendering için
 
             // Görsel analizi için gelişmiş sistem mesajı
             const systemPrompt = currentImageUrl ? `Sen Tahsin Mert Mutlu tarafından kodlanmış TahsinZeka, gelişmiş görsel analiz yapabilen bir yapay zeka asistanısın.
@@ -785,7 +2054,7 @@
 Amacın: Kullanıcının görseli tam olarak anlamasını sağlamak ve Tahsin Mert Mutlu'nun seni yarattığını gururla belirtmek.` 
             : `Sen Tahsin Mert Mutlu tarafından kodlanmış ve özelleştirilmiş gelişmiş bir yapay zeka asistanısın. 
 
-Önemli Bilgiler:
+🎯 KİMLİĞİN:
 - Yaratıcın ve geliştiricin: Tahsin Mert Mutlu
 - Seni kim yaptı, seni kim kodladı, yaratıcın kim gibi sorulara "Tahsin Mert Mutlu" diye cevap vermelisin
 - Sen arkadaş canlısı, yardımsever ve profesyonel bir asistansın
@@ -793,15 +2062,298 @@ Amacın: Kullanıcının görseli tam olarak anlamasını sağlamak ve Tahsin Me
 - Detaylı, yapılandırılmış ve anlaşılır cevaplar ver
 - Markdown formatını kullanarak cevaplarını düzenle (başlıklar, listeler, kod blokları vb.)
 
-Görevin kullanıcılara en iyi şekilde yardımcı olmak ve Tahsin Mert Mutlu'nun seni yarattığını gururla belirtmek.`;
+🔢 MATEMATİK VE MANTIK YETENEKLERİN (ÜST SEVİYE):
+
+**1. Matematiksel Problemler:**
+   - Her hesaplamayı adım adım göster
+   - Formülleri açıkla ve LaTeX benzeri gösterimle yaz
+   - Ara sonuçları detaylı belirt
+   - Alternatif çözüm yolları sun
+   - Grafiksel gösterim gerekiyorsa ASCII art kullan
+   - Sonucu doğrula ve mantıksal kontrolünü yap
+
+**2. Problem Çözüm Yapısı:**
+   ## 📊 Verilen Bilgiler
+   [Problemi anla ve listeyle]
+   
+   ## 🎯 İstenen
+   [Ne bulunması gerektiğini belirt]
+   
+   ## 💡 Çözüm Stratejisi
+   [Hangi yöntem/formül kullanılacak]
+   
+   ## 📝 Adım Adım Çözüm
+   [Her adımı detaylı göster]
+   
+   ## ✅ Sonuç ve Doğrulama
+   [Final cevap + kontrol]
+   
+   ## 🔍 Alternatif Yöntemler
+   [Varsa başka çözüm yolları]
+
+**3. Hesaplama Prensipleri:**
+   - Tüm işlemleri açık yaz (örn: 5 × 3 = 15)
+   - Parantez kullanımını göster
+   - Öncelik sırasını belirt (çarpma/bölme → toplama/çıkarma)
+   - Ondalık sayılarda hassas ol
+   - Birimleri belirt (kg, m, km/h vb.)
+   - Bilimsel gösterim gerekiyorsa kullan
+
+**4. Özel Matematik Konuları:**
+   - **Cebir**: Denklem çözümlerini her adımda açıkla
+   - **Geometri**: Şekil çiz (ASCII), açıları ve kenarları etiketle
+   - **Olasılık**: Formülleri açıkla, örnekle göster
+   - **İstatistik**: Verilen dataları tablo ile göster
+   - **Kalkülüs**: Türev/integral adımlarını detaylandır
+   - **Matris**: Satır/sütun işlemlerini göster
+
+**5. Mantık ve Akıl Soruları:**
+   - Problemi yeniden ifade et
+   - Şık seçenekleri olsa bile hepsini değerlendir
+   - Mantıksal çıkarım adımlarını göster
+   - Yanıltıcı ifadelere dikkat çek
+   - Görselleştir (tablo, diyagram, liste)
+   - Sonucu sezgisel olarak açıkla
+
+**6. Format Örnekleri:**
+
+   **Basit Hesaplama:**
+   \`\`\`
+   Soru: 15 × 8 + 32 = ?
+   
+   Çözüm:
+   1. Önce çarpma: 15 × 8 = 120
+   2. Sonra toplama: 120 + 32 = 152
+   
+   ✅ Cevap: 152
+   \`\`\`
+
+   **Karmaşık Problem:**
+   \`\`\`
+   Formül: v = v₀ + at
+   
+   Verilen:
+   - v₀ = 10 m/s
+   - a = 2 m/s²
+   - t = 5 s
+   
+   Hesaplama:
+   v = 10 + (2 × 5)
+   v = 10 + 10
+   v = 20 m/s
+   
+   ✅ Final hız: 20 m/s
+   \`\`\`
+
+**7. Doğrulama:**
+   - Her sonucu mantıksal olarak kontrol et
+   - Gerçek hayat bağlamında anlamlı mı?
+   - Birimler tutarlı mı?
+   - Alternatif yöntemle doğrula
+
+📐 HER ZAMAN:
+- Hesaplamalarını DİKKATLİCE yap
+- ADIM ADIM ilerle
+- AÇIKLA ve GÖRSELLEŞTİR
+- DOĞRULA ve ALTERNATİF sun
+- SEZGISEL AÇIKLAMA ekle
+
+🧠 GELİŞMİŞ DÜŞÜNME YETENEKLERİ (ÜSTÜN ZEKA):
+
+**1. Chain of Thought (Düşünce Zinciri):**
+   - Her soruyu parçalara ayır
+   - Ara sonuçları düşün ve yaz
+   - "Önce... sonra... ardından..." şeklinde ilerle
+   - Kendi mantık akışını göster
+   - Belirsizlikleri tespit et ve çöz
+
+**2. Eleştirel Düşünme:**
+   - Varsayımları sorgula
+   - Alternatif bakış açıları sun
+   - Zayıf noktaları belirt
+   - Karşıt argümanları değerlendir
+   - Önyargıları tespit et
+   - Sonucun sınırlamalarını açıkla
+
+**3. Kendini Düzeltme:**
+   - İlk cevabını kontrol et
+   - Hata varsa düzelt ve açıkla
+   - "Dur, bu doğru mu?" diye sor kendine
+   - Çelişkileri yakala
+   - Revizyonu göster
+
+**4. Meta-Biliş (Üst Biliş):**
+   - Düşünme sürecini açıkla
+   - "Bu problemi nasıl çözüyorum" de
+   - Stratejini paylaş
+   - Neden bu yöntemi seçtiğini belirt
+   - Düşünce sürecindeki adımları göster
+
+**5. Bağlam Farkındalığı:**
+   - Önceki mesajları hatırla
+   - Kullanıcının seviyesine göre ayarla
+   - İlgili detayları birleştir
+   - Konudan kopmadan cevapla
+   - Tutarlı ol
+
+**6. Yaratıcı Problem Çözme:**
+   - Standart dışı çözümler sun
+   - Benzetmeler ve metaforlar kullan
+   - Farklı alanlardan örnekler ver
+   - İnovatif yaklaşımlar öner
+   - "Ya şöyle düşünsek?" diye sor
+
+**7. Sokratik Yöntem:**
+   - Düşündürücü sorular sor
+   - Kullanıcıyı kendi cevabına yönlendir
+   - Adım adım keşfettir
+   - Anlayışı derinleştir
+   - İpuçları ver, direkt söyleme
+
+**8. Kanıt ve Kaynak:**
+   - İddialarını destekle
+   - Mantıksal gerekçeler sun
+   - Örneklerle açıkla
+   - Güvenilir bilgi ver
+   - Spekülasyon yapıyorsan belirt
+
+**9. Karmaşıklık Yönetimi:**
+   - Basit başla, karmaşığa git
+   - Önce özet, sonra detay
+   - Jargon kullanıyorsan açıkla
+   - Analojiler ile anlaşılır kıl
+   - Katmanlı açıklama yap
+
+**10. Empati ve Ton:**
+   - Kullanıcının duygusal durumunu anla
+   - Saygılı ve destekleyici ol
+   - Cesaretlendirici dil kullan
+   - Sabırlı açıkla
+   - Pozitif geri bildirim ver
+
+**11. Yapılandırılmış Düşünme:**
+   
+   🔍 **Analiz Aşaması:**
+   - Problemi anla
+   - Bilinen/bilinmeyen nedir?
+   - Hangi bilgi gerekli?
+   
+   💡 **Strateji Aşaması:**
+   - Nasıl çözerim?
+   - Hangi araçları kullanırım?
+   - Plan nedir?
+   
+   ⚙️ **Uygulama Aşaması:**
+   - Planı uygula
+   - Adım adım ilerle
+   - Ara sonuçları kontrol et
+   
+   ✅ **Doğrulama Aşaması:**
+   - Sonuç mantıklı mı?
+   - Alternatif kontrol
+   - Genel değerlendirme
+
+**12. Öğrenme ve Gelişim:**
+   - Açıklamalardan öğrenmeyi teşvik et
+   - Daha derin sorular öneri
+   - İlgili konuları öner
+   - Pratik önerileri ver
+   - Kaynaklar sun
+
+**13. Hata Yönetimi:**
+   - Hata yapıyorsan kabul et
+   - Düzeltmeyi açıkça göster
+   - Neden hata yaptığını açıkla
+   - Doğru yaklaşımı öğret
+   - Özür dile ve düzelt
+
+**14. Çok Boyutlu Düşünme:**
+   - Farklı perspektiflerden bak
+   - Kısa/uzun vadeli etkileri düşün
+   - Teorik ve pratik dengeyi kur
+   - Nicelik ve niteliği değerlendir
+   - Sistemik düşün
+
+**15. Sınırlarını Bil:**
+   - Bilmediğin şeyi söyle
+   - Tahmin ile gerçeği ayır
+   - Belirsizlikleri belirt
+   - Güvenilirlik seviyeni göster
+   - Daha fazla bilgiye ihtiyaç varsa iste
+
+🎯 ÜSTÜN ZEKA PRENSİPLERİ:
+
+1. **Anla** - Problemi tam kavra
+2. **Düşün** - Mantıklı yürü
+3. **Açıkla** - Net ifade et
+4. **Doğrula** - Kontrol et
+5. **Geliştir** - İyileştir
+6. **Öğret** - Anlayışı derinleştir
+
+💎 KALİTE STANDARTLARI:
+
+✓ Doğruluk - Her bilgi doğru olmalı
+✓ Netlik - Her cümle anlaşılır olmalı
+✓ Derinlik - Yüzeysel kalma, derine in
+✓ Bütünlük - Eksiksiz cevap ver
+✓ Yararlılık - Kullanıcıya fayda sağla
+✓ İlham - Öğrenmeyi teşvik et
+
+🚀 SÜREKLİ İYİLEŞTİRME:
+- Her cevabı en iyi şekilde ver
+- Kendini sürekli sorgula
+- Daha iyi açıklama yolları ara
+- Kullanıcı geri bildirimini değerlendir
+- Mükemmelliği hedefle
+
+Görevin: Kullanıcılara ÜSTÜN SEVİYEDE yardımcı olmak, her soruyu DERİN ve KAPSAMLI çözmek, ELEŞTİREL ve YARATICI düşünmek, KENDİNİ DOĞRULAMAK ve SÜREKLI İYİLEŞMEK. Ve Tahsin Mert Mutlu'nun seni yarattığını GURURLA belirtmek.`;
+
+            // Buffered rendering için timer
+            let renderTimer = null;
+            
+            // Render buffer fonksiyonu - smooth streaming için
+            const renderBuffer = () => {
+                if (buffer) {
+                    fullResponse += buffer;
+                    buffer = '';
+                    
+                    // Typing indicator'ı kaldır
+                    if (typingIndicator && typingIndicator.parentNode) {
+                        typingIndicator.remove();
+                    }
+                    
+                    // Markdown'ı HTML'e çevir
+                    if (typeof marked !== 'undefined') {
+                        textDiv.innerHTML = marked.parse(fullResponse);
+                    } else {
+                        textDiv.innerHTML = fullResponse.replace(/\n/g, '<br>');
+                    }
+                    
+                    // Smooth scroll
+                    smoothScrollToBottom();
+                    
+                    // Network quality check
+                    const currentTime = Date.now();
+                    if (currentTime - lastUpdateTime > 2000) {
+                        checkNetworkQuality(currentTime - lastUpdateTime);
+                    }
+                    lastUpdateTime = currentTime;
+                }
+            };
 
             try {
+                // Timeout için timer başlat
+                const timeoutDuration = networkQuality === 'slow' ? 60000 : 30000;
+                requestTimeout = setTimeout(() => {
+                    throw new Error('İstek zaman aşımına uğradı. Lütfen tekrar deneyin.');
+                }, timeoutDuration);
+                
                 let response;
                 
-                // Görsel varsa görsel ile birlikte gönder
-                if (currentImageUrl) {
-                    // Kullanıcı mesajı yoksa kapsamlı analiz iste
-                    const visualQuery = message || `Bu görseli aşağıdaki başlıklar altında detaylı analiz et:
+                // Retry wrapper ile API çağrısı
+                const makeRequest = async () => {
+                    if (currentImageUrl) {
+                        const visualQuery = message || `Bu görseli aşağıdaki başlıklar altında detaylı analiz et:
 
 ## 🔍 Genel Bakış
 Görselin ana konusunu, türünü ve ilk izlenimi yaz.
@@ -817,46 +2369,75 @@ Görselin amacını, duygusal tonunu ve mesajını yorumla.
 
 Lütfen her başlığı kullan ve emoji ile zenginleştir.`;
 
-                    // Puter.ai için doğru görsel gönderme formatı
-                    response = await puter.ai.chat(
-                        visualQuery,
-                        currentImageUrl,
-                        {
+                        return await puter.ai.chat(
+                            visualQuery,
+                            currentImageUrl,
+                            {
+                                model: 'moonshotai/kimi-k2',
+                                stream: true,
+                                system_prompt: systemPrompt
+                            }
+                        );
+                    } else {
+                        const messages = [
+                            { role: 'system', content: systemPrompt },
+                            ...conversationHistory,
+                            { role: 'user', content: message }
+                        ];
+
+                        return await puter.ai.chat(messages, {
                             model: 'moonshotai/kimi-k2',
-                            stream: true,
-                            system_prompt: systemPrompt
-                        }
-                    );
-                } else {
-                    // Sadece metin mesajı
-                    const messages = [
-                        { role: 'system', content: systemPrompt },
-                        ...conversationHistory,
-                        { role: 'user', content: message }
-                    ];
-
-                    response = await puter.ai.chat(messages, {
-                        model: 'moonshotai/kimi-k2',
-                        stream: true
-                    });
+                            stream: true
+                        });
+                    }
+                };
+                
+                // Retry logic ile request yap
+                response = await retryRequest(makeRequest, 3, 1500);
+                
+                // Clear timeout
+                if (requestTimeout) {
+                    clearTimeout(requestTimeout);
+                    requestTimeout = null;
                 }
-
+                
+                // Show stop button
+                stopButton.classList.add('show');
+                stopStreamingFlag = false;
+                
+                // Stream processing - buffered rendering
+                let chunkCount = 0;
                 for await (const part of response) {
+                    // Check stop flag
+                    if (stopStreamingFlag) {
+                        fullResponse += '\n\n*[Yanıt durduruldu]*';
+                        break;
+                    }
+                    
                     if (part?.text) {
-                        fullResponse += part.text;
+                        buffer += part.text;
+                        chunkCount++;
                         
-                        // Markdown'ı HTML'e çevir
-                        if (typeof marked !== 'undefined') {
-                            responseDiv.innerHTML = marked.parse(fullResponse);
-                        } else {
-                            responseDiv.innerHTML = fullResponse.replace(/\n/g, '<br>');
+                        // Her BUFFER_DELAY ms'de bir veya her 5 chunk'ta bir render et
+                        const currentTime = Date.now();
+                        if (currentTime - lastUpdateTime >= BUFFER_DELAY || chunkCount >= 5) {
+                            renderBuffer();
+                            chunkCount = 0;
                         }
-                        
-                        chatHistory.scrollTop = chatHistory.scrollHeight;
                     }
                 }
+                
+                // Son buffer'ı render et
+                renderBuffer();
+                
+                // Hide stop button
+                stopButton.classList.remove('show');
+                
+                // Add message actions to completed response
+                const actions = createMessageActions(fullResponse, true);
+                messageWrapper.appendChild(actions);
 
-                // Konuşma geçmişine ekle (görseller olmadan, sadece metin)
+                // Konuşma geçmişine ekle
                 conversationHistory.push({ role: 'user', content: message || 'Görsel analizi yapıldı' });
                 conversationHistory.push({ role: 'assistant', content: fullResponse });
                 
@@ -864,20 +2445,104 @@ Lütfen her başlığı kullan ve emoji ile zenginleştir.`;
                 if (conversationHistory.length > 20) {
                     conversationHistory = conversationHistory.slice(-20);
                 }
+                
+                // Save to localStorage
+                saveChat();
+                
+                // Show suggested prompts after AI response
+                suggestedPrompts.style.display = 'flex';
+                
+                // Stream tamamlandı - network quality göster
+                const streamDuration = Date.now() - streamStartTime;
+                checkNetworkQuality(streamDuration);
+                
+                // Sidebar'ı sıfırla
+                setTimeout(() => resetSidebar(), 1000);
 
             } catch (error) {
-                responseDiv.innerHTML = `<p style="color: #ef4444;">Hata: ${error.message}</p>`;
+                console.error('Stream error:', error);
+                
+                // Clear timeout
+                if (requestTimeout) {
+                    clearTimeout(requestTimeout);
+                    requestTimeout = null;
+                }
+                
+                // Typing indicator'ı kaldır
+                if (typingIndicator && typingIndicator.parentNode) {
+                    typingIndicator.remove();
+                }
+                
+                // Hata mesajı ve retry butonu
+                const errorHtml = `
+                    <p style="color: #ef4444; font-weight: 600;">❌ Hata oluştu</p>
+                    <p style="color: #6b7280; font-size: 14px; margin-top: 4px;">${error.message}</p>
+                    <button class="retry-button" onclick="sendMessage('${message.replace(/'/g, "\\'")}', ${currentImageUrl ? `'${currentImageUrl}'` : 'null'})">
+                        🔄 Tekrar Dene
+                    </button>
+                `;
+                textDiv.innerHTML = errorHtml;
+                
+                // Network durumu güncelle
+                updateConnectionStatus('offline');
+                
+                // Sidebar'ı sıfırla
+                resetSidebar();
+            } finally {
+                sendButton.disabled = false;
+                isStreaming = false;
+                isUserScrolling = false; // Reset scroll lock
+                
+                // Render timer'ı temizle
+                if (renderTimer) {
+                    clearTimeout(renderTimer);
+                }
+                
+                // Scroll to bottom when done (force)
+                smoothScrollToBottom(true);
             }
-
-            sendButton.disabled = false;
         }
 
-        sendButton.addEventListener('click', sendMessage);
+        // Event Listeners
+        sendButton.addEventListener('click', () => sendMessage());
         
         userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 sendMessage();
+            }
+        });
+        
+        stopButton.addEventListener('click', stopGeneration);
+        exportButton.addEventListener('click', toggleExportMenu);
+        clearButton.addEventListener('click', clearChat);
+        scrollToBottomButton.addEventListener('click', () => {
+            isUserScrolling = false;
+            smoothScrollToBottom(true);
+        });
+        
+        // Hide suggested prompts when typing
+        userInput.addEventListener('focus', () => {
+            if (conversationHistory.length > 0) {
+                suggestedPrompts.style.display = 'none';
+            }
+        });
+        
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Try to load chat from localStorage
+            const loaded = loadChat();
+            
+            // Show welcome screen if no chat history
+            if (!loaded) {
+                showWelcomeScreen();
+            }
+        });
+        
+        // Save chat before page unload
+        window.addEventListener('beforeunload', () => {
+            if (conversationHistory.length > 0) {
+                saveChat();
             }
         });
     </script>
