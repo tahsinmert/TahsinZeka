@@ -41,8 +41,8 @@
         /* Tablet optimizasyonları */
         @media screen and (min-width: 768px) and (max-width: 1024px) {
             body {
-                height: 100vh;
-                overflow: hidden;
+            height: 100vh;
+            overflow: hidden;
             }
             
             .chat-container {
@@ -246,6 +246,60 @@
             padding: 30px;
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .right-sidebar.hidden {
+            width: 0;
+            padding: 0;
+            border-left: none;
+            opacity: 0;
+        }
+        
+        /* Sidebar toggle button */
+        .sidebar-toggle {
+            position: fixed;
+            top: 50%;
+            right: 280px;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #e5e5e5;
+            border-right: none;
+            border-radius: 6px 0 0 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar-toggle:hover {
+            background: rgba(16, 163, 127, 0.1);
+            border-color: #10a37f;
+        }
+        
+        .sidebar-toggle svg {
+            width: 16px;
+            height: 16px;
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-toggle:hover svg {
+            color: #10a37f;
+        }
+        
+        .sidebar-toggle.sidebar-hidden {
+            right: 0;
+        }
+        
+        .sidebar-toggle.sidebar-hidden svg {
+            transform: rotate(180deg);
         }
         
         .sidebar-content {
@@ -377,6 +431,10 @@
         /* Hide sidebar on mobile and tablet */
         @media screen and (max-width: 1024px) {
             .right-sidebar {
+                display: none;
+            }
+            
+            .sidebar-toggle {
                 display: none;
             }
         }
@@ -1296,7 +1354,7 @@
                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                     </svg>
                 </button>
-            </div>
+        </div>
         </div>
         
         <!-- Export Menu -->
@@ -1328,7 +1386,7 @@
         </button>
         
         <div class="chat-main">
-            <div id="chat-history"></div>
+        <div id="chat-history"></div>
             
             <!-- Right Sidebar -->
             <div class="right-sidebar" id="right-sidebar">
@@ -1345,6 +1403,13 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Sidebar Toggle Button -->
+        <button class="sidebar-toggle" id="sidebar-toggle" title="Yan paneli gizle/göster">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
         
         <!-- Suggested Prompts -->
         <div class="suggested-prompts" id="suggested-prompts" style="display: none;">
@@ -1398,6 +1463,8 @@
         const suggestedPrompts = document.getElementById('suggested-prompts');
         const scrollToBottomButton = document.getElementById('scroll-to-bottom');
         const sidebarContent = document.getElementById('sidebar-content');
+        const rightSidebar = document.getElementById('right-sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
 
         let selectedImage = null;
         let selectedImageUrl = null;
@@ -1413,10 +1480,14 @@
         
         // Local storage key
         const STORAGE_KEY = 'tahsinzeka_chat_history';
+        const SIDEBAR_STORAGE_KEY = 'tahsinzeka_sidebar_visible';
         
         // Auto-scroll management
         let isUserScrolling = false;
         let scrollTimeout = null;
+        
+        // Sidebar visibility state
+        let isSidebarVisible = localStorage.getItem(SIDEBAR_STORAGE_KEY) !== 'false'; // Default true
 
         // Network quality monitoring
         function updateConnectionStatus(status) {
@@ -1587,6 +1658,30 @@
         // Add CSS transition to sidebar content
         if (sidebarContent) {
             sidebarContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        }
+        
+        // Toggle sidebar visibility
+        function toggleSidebar() {
+            isSidebarVisible = !isSidebarVisible;
+            
+            if (isSidebarVisible) {
+                rightSidebar.classList.remove('hidden');
+                sidebarToggle.classList.remove('sidebar-hidden');
+            } else {
+                rightSidebar.classList.add('hidden');
+                sidebarToggle.classList.add('sidebar-hidden');
+            }
+            
+            // Save preference to localStorage
+            localStorage.setItem(SIDEBAR_STORAGE_KEY, isSidebarVisible.toString());
+        }
+        
+        // Initialize sidebar state from localStorage
+        function initializeSidebarState() {
+            if (!isSidebarVisible && rightSidebar && sidebarToggle) {
+                rightSidebar.classList.add('hidden');
+                sidebarToggle.classList.add('sidebar-hidden');
+            }
         }
         
         // Create typing indicator
@@ -1929,7 +2024,7 @@
 
         // Konuşma geçmişi için array
         let conversationHistory = [];
-        
+
         // Retry helper function
         async function retryRequest(requestFn, maxRetries = 3, delay = 1000) {
             for (let i = 0; i < maxRetries; i++) {
@@ -1955,7 +2050,7 @@
 
             // Mesajı ekle (sadece retry değilse)
             if (!retryMessage) {
-                addMessage('Siz', message || '📸 Görsel analizi istendi', selectedImageUrl);
+            addMessage('Siz', message || '📸 Görsel analizi istendi', selectedImageUrl);
                 // Kullanıcı mesajı eklendikten sonra zorla en alta kaydır
                 smoothScrollToBottom(true);
                 // Sidebar'ı konuya göre güncelle
@@ -1965,8 +2060,8 @@
             const currentImageUrl = retryImageUrl || selectedImageUrl;
             
             if (!retryMessage) {
-                userInput.value = '';
-                userInput.style.height = 'auto';
+            userInput.value = '';
+            userInput.style.height = 'auto';
             }
             sendButton.disabled = true;
             isStreaming = true;
@@ -1974,10 +2069,10 @@
             
             // Görseli temizle (sadece retry değilse)
             if (!retryMessage) {
-                selectedImage = null;
-                selectedImageUrl = null;
-                imageInput.value = '';
-                imagePreviewContainer.classList.remove('show');
+            selectedImage = null;
+            selectedImageUrl = null;
+            imageInput.value = '';
+            imagePreviewContainer.classList.remove('show');
             }
 
             // AI yanıt message wrapper oluştur
@@ -2352,8 +2447,8 @@ Görevin: Kullanıcılara ÜSTÜN SEVİYEDE yardımcı olmak, her soruyu DERİN 
                 
                 // Retry wrapper ile API çağrısı
                 const makeRequest = async () => {
-                    if (currentImageUrl) {
-                        const visualQuery = message || `Bu görseli aşağıdaki başlıklar altında detaylı analiz et:
+                if (currentImageUrl) {
+                    const visualQuery = message || `Bu görseli aşağıdaki başlıklar altında detaylı analiz et:
 
 ## 🔍 Genel Bakış
 Görselin ana konusunu, türünü ve ilk izlenimi yaz.
@@ -2370,26 +2465,26 @@ Görselin amacını, duygusal tonunu ve mesajını yorumla.
 Lütfen her başlığı kullan ve emoji ile zenginleştir.`;
 
                         return await puter.ai.chat(
-                            visualQuery,
-                            currentImageUrl,
-                            {
-                                model: 'moonshotai/kimi-k2',
-                                stream: true,
-                                system_prompt: systemPrompt
-                            }
-                        );
-                    } else {
-                        const messages = [
-                            { role: 'system', content: systemPrompt },
-                            ...conversationHistory,
-                            { role: 'user', content: message }
-                        ];
+                        visualQuery,
+                        currentImageUrl,
+                        {
+                            model: 'moonshotai/kimi-k2',
+                            stream: true,
+                            system_prompt: systemPrompt
+                        }
+                    );
+                } else {
+                    const messages = [
+                        { role: 'system', content: systemPrompt },
+                        ...conversationHistory,
+                        { role: 'user', content: message }
+                    ];
 
                         return await puter.ai.chat(messages, {
-                            model: 'moonshotai/kimi-k2',
-                            stream: true
-                        });
-                    }
+                        model: 'moonshotai/kimi-k2',
+                        stream: true
+                    });
+                }
                 };
                 
                 // Retry logic ile request yap
@@ -2489,7 +2584,7 @@ Lütfen her başlığı kullan ve emoji ile zenginleştir.`;
                 // Sidebar'ı sıfırla
                 resetSidebar();
             } finally {
-                sendButton.disabled = false;
+            sendButton.disabled = false;
                 isStreaming = false;
                 isUserScrolling = false; // Reset scroll lock
                 
@@ -2529,7 +2624,15 @@ Lütfen her başlığı kullan ve emoji ile zenginleştir.`;
         });
         
         // Initialize on page load
+        // Sidebar toggle event
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', toggleSidebar);
+        }
+        
         window.addEventListener('DOMContentLoaded', () => {
+            // Initialize sidebar state
+            initializeSidebarState();
+            
             // Try to load chat from localStorage
             const loaded = loadChat();
             
