@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayarlar - TahsinZeka</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="tahsinzeka-logo.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .settings-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .settings-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #10a37f, #0d8a6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+        
+        .settings-icon svg {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+        
+        .settings-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 8px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background: #f0f9ff;
+            color: #10a37f;
+        }
+        
+        .nav-link svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .content-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: #10a37f;
+            color: white;
+            border-color: #10a37f;
+        }
+        
+        .back-button svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .settings-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title svg {
+            width: 24px;
+            height: 24px;
+            color: #10a37f;
+        }
+        
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .setting-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e5e5e5;
+        }
+        
+        .setting-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .setting-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .setting-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .toggle-switch.active {
+            background: #10a37f;
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(26px);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #10a37f;
+            box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.1);
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+        
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .color-option.selected {
+            border-color: #10a37f;
+            transform: scale(1.1);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #10a37f, #0d8a6b);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 163, 127, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #e5e5e5;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .danger-zone {
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .danger-zone h3 {
+            color: #c53030;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .danger-zone p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .theme-preview {
+            width: 100%;
+            height: 100px;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .export-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .export-option {
+            background: #f8f9fa;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .export-option:hover {
+            background: #e9ecef;
+            border-color: #10a37f;
+        }
+        
+        .export-option svg {
+            width: 30px;
+            height: 30px;
+            color: #10a37f;
+            margin-bottom: 10px;
+        }
+        
+        .export-option h4 {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .export-option p {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+            
+            .main-content {
+                order: 1;
+            }
+            
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="settings-header">
+                <div class="settings-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </div>
+                <h2 class="settings-title">Ayarlar</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul>
+                    <li class="nav-item">
+                        <a href="#general" class="nav-link active" onclick="showSection('general')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                            Genel
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#appearance" class="nav-link" onclick="showSection('appearance')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                            </svg>
+                            Görünüm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#notifications" class="nav-link" onclick="showSection('notifications')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                            Bildirimler
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#privacy" class="nav-link" onclick="showSection('privacy')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <circle cx="12" cy="16" r="1"></circle>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            Gizlilik
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#data" class="nav-link" onclick="showSection('data')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                            Veri
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#advanced" class="nav-link" onclick="showSection('advanced')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"></path>
+                            </svg>
+                            Gelişmiş
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <h1 class="content-title" id="content-title">Genel Ayarlar</h1>
+                <a href="index.html" class="back-button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5m7-7l-7 7 7 7"></path>
+                    </svg>
+                    Ana Sayfaya Dön
+                </a>
+            </div>
+            
+            <div id="alert-container"></div>
+            
+            <!-- General Settings -->
+            <div id="general-section" class="settings-section">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Genel Ayarlar
+                </h2>
+                
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Otomatik Kaydetme</h3>
+                            <div class="toggle-switch active" onclick="toggleSetting(this)" data-setting="auto-save"></div>
+                        </div>
+                        <p class="setting-description">Sohbetleri otomatik olarak kaydet</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Gelişmiş Mod</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="advanced-mode"></div>
+                        </div>
+                        <p class="setting-description">Gelişmiş özellikleri etkinleştir</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Hızlı Yanıt</h3>
+                            <div class="toggle-switch active" onclick="toggleSetting(this)" data-setting="quick-reply"></div>
+                        </div>
+                        <p class="setting-description">Hızlı yanıt önerilerini göster</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Sesli Yanıt</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="voice-response"></div>
+                        </div>
+                        <p class="setting-description">AI yanıtlarını sesli oku</p>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="language" class="form-label">Dil</label>
+                    <select id="language" class="form-input form-select">
+                        <option value="tr">Türkçe</option>
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="timezone" class="form-label">Saat Dilimi</label>
+                    <select id="timezone" class="form-input form-select">
+                        <option value="Europe/Istanbul">Türkiye (UTC+3)</option>
+                        <option value="Europe/London">Londra (UTC+0)</option>
+                        <option value="America/New_York">New York (UTC-5)</option>
+                        <option value="Asia/Tokyo">Tokyo (UTC+9)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Appearance Settings -->
+            <div id="appearance-section" class="settings-section" style="display: none;">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    Görünüm Ayarları
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Tema</label>
+                    <div class="color-picker">
+                        <div class="color-option selected" style="background: linear-gradient(135deg, #667eea, #764ba2);" data-theme="default" onclick="selectTheme(this)"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #1a1a2e, #16213e);" data-theme="dark" onclick="selectTheme(this)"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);" data-theme="sunset" onclick="selectTheme(this)"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #00b894, #00a085);" data-theme="forest" onclick="selectTheme(this)"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);" data-theme="purple" onclick="selectTheme(this)"></div>
+                    </div>
+                    <div id="theme-preview" class="theme-preview" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                        Tema Önizlemesi
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="font-size" class="form-label">Yazı Boyutu</label>
+                    <select id="font-size" class="form-input form-select">
+                        <option value="small">Küçük</option>
+                        <option value="medium" selected>Orta</option>
+                        <option value="large">Büyük</option>
+                        <option value="xlarge">Çok Büyük</option>
+                    </select>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Kompakt Mod</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="compact-mode"></div>
+                        </div>
+                        <p class="setting-description">Daha az boşluk kullan</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Animasyonlar</h3>
+                            <div class="toggle-switch active" onclick="toggleSetting(this)" data-setting="animations"></div>
+                        </div>
+                        <p class="setting-description">Geçiş animasyonlarını göster</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notifications Settings -->
+            <div id="notifications-section" class="settings-section" style="display: none;">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    Bildirim Ayarları
+                </h2>
+                
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">E-posta Bildirimleri</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="email-notifications"></div>
+                        </div>
+                        <p class="setting-description">Yeni mesajlar için e-posta al</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Push Bildirimleri</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="push-notifications"></div>
+                        </div>
+                        <p class="setting-description">Tarayıcı bildirimlerini etkinleştir</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Ses Bildirimleri</h3>
+                            <div class="toggle-switch active" onclick="toggleSetting(this)" data-setting="sound-notifications"></div>
+                        </div>
+                        <p class="setting-description">Yeni mesajlarda ses çal</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Günlük Özet</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="daily-summary"></div>
+                        </div>
+                        <p class="setting-description">Günlük aktivite özeti al</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Privacy Settings -->
+            <div id="privacy-section" class="settings-section" style="display: none;">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <circle cx="12" cy="16" r="1"></circle>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Gizlilik Ayarları
+                </h2>
+                
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Veri Toplama</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="data-collection"></div>
+                        </div>
+                        <p class="setting-description">Kullanım verilerini topla</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Çerezler</h3>
+                            <div class="toggle-switch active" onclick="toggleSetting(this)" data-setting="cookies"></div>
+                        </div>
+                        <p class="setting-description">Çerezleri kabul et</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Gizli Mod</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="incognito-mode"></div>
+                        </div>
+                        <p class="setting-description">Gizli modu etkinleştir</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Konum Paylaşımı</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="location-sharing"></div>
+                        </div>
+                        <p class="setting-description">Konum bilgisini paylaş</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Data Settings -->
+            <div id="data-section" class="settings-section" style="display: none;">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    Veri Yönetimi
+                </h2>
+                
+                <div class="export-options">
+                    <div class="export-option" onclick="exportData('all')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <h4>Tüm Verileri İndir</h4>
+                        <p>Hesap verilerinizi indirin</p>
+                    </div>
+                    
+                    <div class="export-option" onclick="exportData('chats')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <h4>Sohbetleri İndir</h4>
+                        <p>Sadece sohbet geçmişi</p>
+                    </div>
+                    
+                    <div class="export-option" onclick="exportData('settings')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <h4>Ayarları İndir</h4>
+                        <p>Kullanıcı tercihleri</p>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-danger" onclick="clearAllData()">Tüm Verileri Sil</button>
+                </div>
+            </div>
+            
+            <!-- Advanced Settings -->
+            <div id="advanced-section" class="settings-section" style="display: none;">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"></path>
+                    </svg>
+                    Gelişmiş Ayarlar
+                </h2>
+                
+                <div class="form-group">
+                    <label for="api-key" class="form-label">API Anahtarı</label>
+                    <input type="password" id="api-key" class="form-input" placeholder="API anahtarınızı girin">
+                </div>
+                
+                <div class="form-group">
+                    <label for="model" class="form-label">AI Modeli</label>
+                    <select id="model" class="form-input form-select">
+                        <option value="gpt-4">GPT-4</option>
+                        <option value="gpt-3.5-turbo" selected>GPT-3.5 Turbo</option>
+                        <option value="claude-3">Claude 3</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="temperature" class="form-label">Yaratıcılık Seviyesi</label>
+                    <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.7" class="form-input">
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #666; margin-top: 5px;">
+                        <span>Konservatif</span>
+                        <span>Yaratıcı</span>
+                    </div>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Debug Modu</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="debug-mode"></div>
+                        </div>
+                        <p class="setting-description">Geliştirici bilgilerini göster</p>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-header">
+                            <h3 class="setting-title">Beta Özellikler</h3>
+                            <div class="toggle-switch" onclick="toggleSetting(this)" data-setting="beta-features"></div>
+                        </div>
+                        <p class="setting-description">Deneysel özellikleri etkinleştir</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Danger Zone -->
+            <div class="danger-zone">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Tehlikeli Bölge
+                </h3>
+                <p>Bu işlemler geri alınamaz. Lütfen dikkatli olun.</p>
+                <div class="button-group">
+                    <button class="btn btn-danger" onclick="resetSettings()">Ayarları Sıfırla</button>
+                    <button class="btn btn-danger" onclick="deleteAccount()">Hesabı Sil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        
+        // Initialize page
+        window.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            loadSettings();
+        });
+        
+        // Load user data
+        function loadUserData() {
+            const session = localStorage.getItem('tahsinzeka_session') || sessionStorage.getItem('tahsinzeka_session');
+            
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            currentUser = JSON.parse(session);
+        }
+        
+        // Load settings
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('tahsinzeka_settings') || '{}');
+            
+            // Load toggle settings
+            Object.keys(settings).forEach(setting => {
+                const element = document.querySelector(`[data-setting="${setting}"]`);
+                if (element) {
+                    if (settings[setting]) {
+                        element.classList.add('active');
+                    } else {
+                        element.classList.remove('active');
+                    }
+                }
+            });
+            
+            // Load form settings
+            if (settings.language) document.getElementById('language').value = settings.language;
+            if (settings.timezone) document.getElementById('timezone').value = settings.timezone;
+            if (settings.fontSize) document.getElementById('font-size').value = settings.fontSize;
+            if (settings.theme) selectTheme(document.querySelector(`[data-theme="${settings.theme}"]`));
+            if (settings.temperature) document.getElementById('temperature').value = settings.temperature;
+        }
+        
+        // Show section
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.settings-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').style.display = 'block';
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+            
+            // Update content title
+            const titles = {
+                'general': 'Genel Ayarlar',
+                'appearance': 'Görünüm Ayarları',
+                'notifications': 'Bildirim Ayarları',
+                'privacy': 'Gizlilik Ayarları',
+                'data': 'Veri Yönetimi',
+                'advanced': 'Gelişmiş Ayarlar'
+            };
+            document.getElementById('content-title').textContent = titles[sectionName];
+        }
+        
+        // Toggle setting
+        function toggleSetting(element) {
+            element.classList.toggle('active');
+            
+            const setting = element.dataset.setting;
+            const isActive = element.classList.contains('active');
+            
+            // Save setting
+            const settings = JSON.parse(localStorage.getItem('tahsinzeka_settings') || '{}');
+            settings[setting] = isActive;
+            localStorage.setItem('tahsinzeka_settings', JSON.stringify(settings));
+            
+            showAlert('Ayar güncellendi!', 'success');
+        }
+        
+        // Select theme
+        function selectTheme(element) {
+            // Remove selected class from all themes
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked theme
+            element.classList.add('selected');
+            
+            // Update preview
+            const theme = element.dataset.theme;
+            const preview = document.getElementById('theme-preview');
+            
+            const themes = {
+                'default': 'linear-gradient(135deg, #667eea, #764ba2)',
+                'dark': 'linear-gradient(135deg, #1a1a2e, #16213e)',
+                'sunset': 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
+                'forest': 'linear-gradient(135deg, #00b894, #00a085)',
+                'purple': 'linear-gradient(135deg, #6c5ce7, #a29bfe)'
+            };
+            
+            preview.style.background = themes[theme];
+            
+            // Save theme
+            const settings = JSON.parse(localStorage.getItem('tahsinzeka_settings') || '{}');
+            settings.theme = theme;
+            localStorage.setItem('tahsinzeka_settings', JSON.stringify(settings));
+            
+            showAlert('Tema güncellendi!', 'success');
+        }
+        
+        // Export data
+        function exportData(type) {
+            let data = {};
+            
+            switch (type) {
+                case 'all':
+                    data = {
+                        user: currentUser,
+                        chats: JSON.parse(localStorage.getItem('tahsinzeka_chats') || '[]'),
+                        settings: JSON.parse(localStorage.getItem('tahsinzeka_settings') || '{}'),
+                        preferences: JSON.parse(localStorage.getItem('tahsinzeka_preferences') || '{}')
+                    };
+                    break;
+                case 'chats':
+                    data = JSON.parse(localStorage.getItem('tahsinzeka_chats') || '[]');
+                    break;
+                case 'settings':
+                    data = JSON.parse(localStorage.getItem('tahsinzeka_settings') || '{}');
+                    break;
+            }
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `tahsinzeka-${type}-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showAlert(`${type} verileri indirildi!`, 'success');
+        }
+        
+        // Clear all data
+        function clearAllData() {
+            if (confirm('Tüm verileriniz silinecek. Bu işlem geri alınamaz. Emin misiniz?')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                showAlert('Tüm veriler silindi!', 'success');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            }
+        }
+        
+        // Reset settings
+        function resetSettings() {
+            if (confirm('Tüm ayarlar varsayılan değerlere sıfırlanacak. Emin misiniz?')) {
+                localStorage.removeItem('tahsinzeka_settings');
+                showAlert('Ayarlar sıfırlandı!', 'success');
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        }
+        
+        // Delete account
+        function deleteAccount() {
+            if (confirm('Hesabınız kalıcı olarak silinecek. Bu işlem geri alınamaz. Emin misiniz?')) {
+                const users = JSON.parse(localStorage.getItem('tahsinzeka_users') || '[]');
+                const filteredUsers = users.filter(u => u.email !== currentUser.email);
+                localStorage.setItem('tahsinzeka_users', JSON.stringify(filteredUsers));
+                
+                localStorage.removeItem('tahsinzeka_session');
+                sessionStorage.removeItem('tahsinzeka_session');
+                
+                showAlert('Hesap silindi!', 'success');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            }
+        }
+        
+        // Show alert
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alert-container');
+            const alertClass = type === 'success' ? 'alert-success' : 'alert-error';
+            const icon = type === 'success' ? '✅' : '❌';
+            
+            const alert = document.createElement('div');
+            alert.className = `alert ${alertClass}`;
+            alert.innerHTML = `
+                <span>${icon}</span>
+                <span>${message}</span>
+            `;
+            
+            alertContainer.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+        
+        // Save settings on change
+        document.getElementById('language').addEventListener('change', function() {
+            const settings = JSON.parse(localStorage.getItem('tahsinzeka_settings') || '{}');
+            settings.language = this.value;
+            localStorage.setItem('tahsinzeka_settings', JSON.stringify(settings));
+            showAlert('Dil ayarı güncellendi!', 'success');
+        });
+        
+        document.getElementById('timezone').addEventListener('change', function() {
+            const settings = JSON.parse(localStorage.getItem('tahsinzeka_settings') || '{}');
+            settings.timezone = this.value;
+            localStorage.setItem('tahsinzeka_settings', JSON.stringify(settings));
+            showAlert('Saat dilimi güncellendi!', 'success');
+        });
+        
+        document.getElementById('font-size').addEventListener('change', function() {
+            const settings = JSON.parse(localStorage.getItem('tahsinzeka_settings') || '{}');
+            settings.fontSize = this.value;
+            localStorage.setItem('tahsinzeka_settings', JSON.stringify(settings));
+            showAlert('Yazı boyutu güncellendi!', 'success');
+        });
+        
+        document.getElementById('temperature').addEventListener('input', function() {
+            const settings = JSON.parse(localStorage.getItem('tahsinzeka_settings') || '{}');
+            settings.temperature = this.value;
+            localStorage.setItem('tahsinzeka_settings', JSON.stringify(settings));
+        });
+    </script>
+</body>
+</html>

@@ -1229,6 +1229,100 @@
             background: #f7f7f8;
         }
         
+        /* User menu */
+        .user-menu {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 16px;
+            display: none;
+            z-index: 999;
+            min-width: 250px;
+        }
+        
+        .user-menu.show {
+            display: block;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        
+        .user-avatar svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .user-details {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .user-email {
+            color: #666;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        
+        .user-menu-divider {
+            height: 1px;
+            background: #e5e5e5;
+            margin: 12px 0;
+        }
+        
+        .user-menu-option {
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #353740;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+            margin-bottom: 4px;
+        }
+        
+        .user-menu-option:hover {
+            background: #f7f7f8;
+        }
+        
+        .user-menu-option svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .logout-option {
+            color: #e74c3c;
+        }
+        
+        .logout-option:hover {
+            background: #fee;
+        }
+        
         /* Header actions */
         .header-actions {
             margin-left: auto;
@@ -1341,6 +1435,19 @@
             </div>
             <h1>TahsinZeka</h1>
             <div class="header-actions">
+                <button class="header-button" id="login-button" title="Giriş Yap" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                        <polyline points="10 17 15 12 10 7"></polyline>
+                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                    </svg>
+                </button>
+                <button class="header-button" id="user-menu-button" title="Kullanıcı Menüsü" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
                 <button class="header-button" id="export-button" title="Dışa Aktar">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -1367,6 +1474,46 @@
             </div>
             <div class="export-option" onclick="exportChat('json')">
                 <span>💾</span> JSON olarak indir
+            </div>
+        </div>
+        
+        <!-- User Menu -->
+        <div class="user-menu" id="user-menu">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="user-details">
+                    <div class="user-name" id="user-name">Kullanıcı</div>
+                    <div class="user-email" id="user-email">user@example.com</div>
+                </div>
+            </div>
+            <div class="user-menu-divider"></div>
+            <div class="user-menu-option" onclick="showProfile()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Profil</span>
+            </div>
+            <div class="user-menu-option" onclick="showSettings()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                <span>Ayarlar</span>
+            </div>
+            <div class="user-menu-divider"></div>
+            <div class="user-menu-option logout-option" onclick="logout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Çıkış Yap</span>
             </div>
         </div>
         
@@ -1465,6 +1612,13 @@
         const sidebarContent = document.getElementById('sidebar-content');
         const rightSidebar = document.getElementById('right-sidebar');
         const sidebarToggle = document.getElementById('sidebar-toggle');
+        
+        // Auth elements
+        const loginButton = document.getElementById('login-button');
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenu = document.getElementById('user-menu');
+        const userName = document.getElementById('user-name');
+        const userEmail = document.getElementById('user-email');
 
         let selectedImage = null;
         let selectedImageUrl = null;
@@ -1922,6 +2076,9 @@
             if (!exportButton.contains(e.target) && !exportMenu.contains(e.target)) {
                 exportMenu.classList.remove('show');
             }
+            if (!userMenuButton.contains(e.target) && !userMenu.contains(e.target)) {
+                userMenu.classList.remove('show');
+            }
         });
 
         // Markdown yapılandırması
@@ -1967,6 +2124,56 @@
             imageInput.value = '';
             imagePreviewContainer.classList.remove('show');
         });
+
+        // Authentication functions
+        function checkAuthStatus() {
+            const session = localStorage.getItem('tahsinzeka_session') || sessionStorage.getItem('tahsinzeka_session');
+            
+            if (session) {
+                const userData = JSON.parse(session);
+                showUserMenu(userData);
+            } else {
+                showLoginButton();
+            }
+        }
+        
+        function showLoginButton() {
+            loginButton.style.display = 'flex';
+            userMenuButton.style.display = 'none';
+        }
+        
+        function showUserMenu(userData) {
+            loginButton.style.display = 'none';
+            userMenuButton.style.display = 'flex';
+            
+            userName.textContent = userData.name || 'Kullanıcı';
+            userEmail.textContent = userData.email || 'user@example.com';
+        }
+        
+        function toggleUserMenu() {
+            userMenu.classList.toggle('show');
+            exportMenu.classList.remove('show');
+        }
+        
+        function logout() {
+            localStorage.removeItem('tahsinzeka_session');
+            sessionStorage.removeItem('tahsinzeka_session');
+            userMenu.classList.remove('show');
+            showLoginButton();
+            
+            // Show logout message
+            addMessage('TahsinZeka', 'Çıkış yapıldı. Tekrar görüşmek üzere! 👋', null, false);
+        }
+        
+        function showProfile() {
+            userMenu.classList.remove('show');
+            window.location.href = 'profile.html';
+        }
+        
+        function showSettings() {
+            userMenu.classList.remove('show');
+            window.location.href = 'settings.html';
+        }
 
         function addMessage(sender, message, imageUrl = null, isStreaming = false) {
             const messageWrapper = document.createElement('div');
@@ -2611,6 +2818,13 @@ Lütfen her başlığı kullan ve emoji ile zenginleştir.`;
         stopButton.addEventListener('click', stopGeneration);
         exportButton.addEventListener('click', toggleExportMenu);
         clearButton.addEventListener('click', clearChat);
+        
+        // Auth event listeners
+        loginButton.addEventListener('click', () => {
+            window.location.href = 'login.html';
+        });
+        
+        userMenuButton.addEventListener('click', toggleUserMenu);
         scrollToBottomButton.addEventListener('click', () => {
             isUserScrolling = false;
             smoothScrollToBottom(true);
@@ -2630,6 +2844,9 @@ Lütfen her başlığı kullan ve emoji ile zenginleştir.`;
         }
         
         window.addEventListener('DOMContentLoaded', () => {
+            // Check authentication status
+            checkAuthStatus();
+            
             // Initialize sidebar state
             initializeSidebarState();
             

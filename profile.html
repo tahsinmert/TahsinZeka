@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - TahsinZeka</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="tahsinzeka-logo.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #10a37f, #0d8a6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-avatar:hover {
+            transform: scale(1.05);
+        }
+        
+        .profile-avatar svg {
+            width: 50px;
+            height: 50px;
+            color: white;
+        }
+        
+        .avatar-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            background: #10a37f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 3px solid white;
+        }
+        
+        .avatar-upload svg {
+            width: 16px;
+            height: 16px;
+            color: white;
+        }
+        
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        
+        .profile-email {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #10a37f;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 8px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background: #f0f9ff;
+            color: #10a37f;
+        }
+        
+        .nav-link svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .content-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: #10a37f;
+            color: white;
+            border-color: #10a37f;
+        }
+        
+        .back-button svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .form-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title svg {
+            width: 24px;
+            height: 24px;
+            color: #10a37f;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #10a37f;
+            box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.1);
+        }
+        
+        .form-input:disabled {
+            background: #f8f9fa;
+            color: #666;
+        }
+        
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 18px;
+            padding: 4px;
+        }
+        
+        .password-toggle:hover {
+            color: #10a37f;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #10a37f, #0d8a6b);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 163, 127, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #e5e5e5;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: #10a37f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .activity-time {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .preferences-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .preference-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .preference-info h4 {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .preference-info p {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .toggle-switch.active {
+            background: #10a37f;
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(26px);
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+            
+            .main-content {
+                order: 1;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .preferences-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile-header">
+                <div class="profile-avatar" onclick="document.getElementById('avatar-input').click()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <div class="avatar-upload">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14m7-7H5"></path>
+                        </svg>
+                    </div>
+                </div>
+                <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                <h2 class="profile-name" id="profile-name">Kullanıcı Adı</h2>
+                <p class="profile-email" id="profile-email">user@example.com</p>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="total-chats">0</div>
+                    <div class="stat-label">Sohbet</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="total-messages">0</div>
+                    <div class="stat-label">Mesaj</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="member-since">0</div>
+                    <div class="stat-label">Gün</div>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <ul>
+                    <li class="nav-item">
+                        <a href="#personal" class="nav-link active" onclick="showSection('personal')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Kişisel Bilgiler
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#security" class="nav-link" onclick="showSection('security')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <circle cx="12" cy="16" r="1"></circle>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            Güvenlik
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#preferences" class="nav-link" onclick="showSection('preferences')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                            Tercihler
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#activity" class="nav-link" onclick="showSection('activity')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                            Aktivite
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <h1 class="content-title" id="content-title">Kişisel Bilgiler</h1>
+                <a href="index.html" class="back-button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5m7-7l-7 7 7 7"></path>
+                    </svg>
+                    Ana Sayfaya Dön
+                </a>
+            </div>
+            
+            <div id="alert-container"></div>
+            
+            <!-- Personal Information Section -->
+            <div id="personal-section" class="form-section">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Kişisel Bilgiler
+                </h2>
+                
+                <form id="personal-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="first-name" class="form-label">Ad</label>
+                            <input type="text" id="first-name" name="firstName" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name" class="form-label">Soyad</label>
+                            <input type="text" id="last-name" name="lastName" class="form-input" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="email" class="form-label">E-posta Adresi</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Telefon</label>
+                            <input type="tel" id="phone" name="phone" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="birth-date" class="form-label">Doğum Tarihi</label>
+                            <input type="date" id="birth-date" name="birthDate" class="form-input">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="bio" class="form-label">Hakkımda</label>
+                            <textarea id="bio" name="bio" class="form-input form-textarea" placeholder="Kendiniz hakkında kısa bir açıklama yazın..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary" onclick="resetForm('personal-form')">Sıfırla</button>
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Security Section -->
+            <div id="security-section" class="form-section" style="display: none;">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <circle cx="12" cy="16" r="1"></circle>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Güvenlik Ayarları
+                </h2>
+                
+                <form id="security-form">
+                    <div class="form-group">
+                        <label for="current-password" class="form-label">Mevcut Şifre</label>
+                        <div class="password-container">
+                            <input type="password" id="current-password" name="currentPassword" class="form-input" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('current-password')">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-password" class="form-label">Yeni Şifre</label>
+                        <div class="password-container">
+                            <input type="password" id="new-password" name="newPassword" class="form-input" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('new-password')">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password" class="form-label">Yeni Şifre Tekrar</label>
+                        <div class="password-container">
+                            <input type="password" id="confirm-password" name="confirmPassword" class="form-input" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirm-password')">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary" onclick="resetForm('security-form')">Sıfırla</button>
+                        <button type="submit" class="btn btn-primary">Şifreyi Güncelle</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Preferences Section -->
+            <div id="preferences-section" class="form-section" style="display: none;">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Tercihler
+                </h2>
+                
+                <div class="preferences-grid">
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>E-posta Bildirimleri</h4>
+                            <p>Yeni mesajlar ve güncellemeler için e-posta al</p>
+                        </div>
+                        <div class="toggle-switch" onclick="togglePreference(this)" data-preference="email-notifications"></div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>Push Bildirimleri</h4>
+                            <p>Tarayıcı bildirimlerini etkinleştir</p>
+                        </div>
+                        <div class="toggle-switch" onclick="togglePreference(this)" data-preference="push-notifications"></div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>Karanlık Tema</h4>
+                            <p>Karanlık modu kullan</p>
+                        </div>
+                        <div class="toggle-switch" onclick="togglePreference(this)" data-preference="dark-theme"></div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>Otomatik Kaydetme</h4>
+                            <p>Sohbetleri otomatik olarak kaydet</p>
+                        </div>
+                        <div class="toggle-switch active" onclick="togglePreference(this)" data-preference="auto-save"></div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>Gizlilik Modu</h4>
+                            <p>Gizlilik ayarlarını maksimize et</p>
+                        </div>
+                        <div class="toggle-switch" onclick="togglePreference(this)" data-preference="privacy-mode"></div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>Gelişmiş Analitik</h4>
+                            <p>Kullanım verilerini topla</p>
+                        </div>
+                        <div class="toggle-switch" onclick="togglePreference(this)" data-preference="analytics"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Activity Section -->
+            <div id="activity-section" class="form-section" style="display: none;">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    Son Aktiviteler
+                </h2>
+                
+                <div id="activity-list">
+                    <!-- Activity items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        
+        // Initialize page
+        window.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            loadPreferences();
+            loadActivity();
+        });
+        
+        // Load user data
+        function loadUserData() {
+            const session = localStorage.getItem('tahsinzeka_session') || sessionStorage.getItem('tahsinzeka_session');
+            
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            currentUser = JSON.parse(session);
+            
+            // Update profile info
+            document.getElementById('profile-name').textContent = currentUser.name || 'Kullanıcı';
+            document.getElementById('profile-email').textContent = currentUser.email || 'user@example.com';
+            
+            // Update form fields
+            const users = JSON.parse(localStorage.getItem('tahsinzeka_users') || '[]');
+            const userData = users.find(u => u.email === currentUser.email);
+            
+            if (userData) {
+                document.getElementById('first-name').value = userData.firstName || '';
+                document.getElementById('last-name').value = userData.lastName || '';
+                document.getElementById('email').value = userData.email || '';
+                document.getElementById('phone').value = userData.phone || '';
+                document.getElementById('birth-date').value = userData.birthDate || '';
+                document.getElementById('bio').value = userData.bio || '';
+            }
+            
+            // Update stats
+            updateStats();
+        }
+        
+        // Update user statistics
+        function updateStats() {
+            const chats = JSON.parse(localStorage.getItem('tahsinzeka_chats') || '[]');
+            const userChats = chats.filter(chat => chat.userId === currentUser.userId);
+            
+            let totalMessages = 0;
+            userChats.forEach(chat => {
+                totalMessages += chat.messages ? chat.messages.length : 0;
+            });
+            
+            document.getElementById('total-chats').textContent = userChats.length;
+            document.getElementById('total-messages').textContent = totalMessages;
+            
+            // Calculate days since registration
+            const registrationDate = new Date(currentUser.loginTime || Date.now());
+            const daysSince = Math.floor((Date.now() - registrationDate.getTime()) / (1000 * 60 * 60 * 24));
+            document.getElementById('member-since').textContent = daysSince;
+        }
+        
+        // Show section
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').style.display = 'block';
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+            
+            // Update content title
+            const titles = {
+                'personal': 'Kişisel Bilgiler',
+                'security': 'Güvenlik Ayarları',
+                'preferences': 'Tercihler',
+                'activity': 'Son Aktiviteler'
+            };
+            document.getElementById('content-title').textContent = titles[sectionName];
+        }
+        
+        // Toggle password visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = input.nextElementSibling;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁️';
+            }
+        }
+        
+        // Toggle preference
+        function togglePreference(element) {
+            element.classList.toggle('active');
+            
+            const preference = element.dataset.preference;
+            const isActive = element.classList.contains('active');
+            
+            // Save preference
+            const preferences = JSON.parse(localStorage.getItem('tahsinzeka_preferences') || '{}');
+            preferences[preference] = isActive;
+            localStorage.setItem('tahsinzeka_preferences', JSON.stringify(preferences));
+            
+            showAlert('Tercih güncellendi!', 'success');
+        }
+        
+        // Load preferences
+        function loadPreferences() {
+            const preferences = JSON.parse(localStorage.getItem('tahsinzeka_preferences') || '{}');
+            
+            Object.keys(preferences).forEach(preference => {
+                const element = document.querySelector(`[data-preference="${preference}"]`);
+                if (element) {
+                    if (preferences[preference]) {
+                        element.classList.add('active');
+                    } else {
+                        element.classList.remove('active');
+                    }
+                }
+            });
+        }
+        
+        // Load activity
+        function loadActivity() {
+            const activityList = document.getElementById('activity-list');
+            const activities = [
+                {
+                    icon: '💬',
+                    title: 'Yeni sohbet başlattınız',
+                    time: '2 saat önce'
+                },
+                {
+                    icon: '🔐',
+                    title: 'Şifrenizi güncellediniz',
+                    time: '1 gün önce'
+                },
+                {
+                    icon: '⚙️',
+                    title: 'Tercihlerinizi değiştirdiniz',
+                    time: '3 gün önce'
+                },
+                {
+                    icon: '📊',
+                    title: 'Profil bilgilerinizi güncellediniz',
+                    time: '1 hafta önce'
+                }
+            ];
+            
+            activityList.innerHTML = activities.map(activity => `
+                <div class="activity-item">
+                    <div class="activity-icon">${activity.icon}</div>
+                    <div class="activity-content">
+                        <div class="activity-title">${activity.title}</div>
+                        <div class="activity-time">${activity.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Form submission handlers
+        document.getElementById('personal-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const userData = Object.fromEntries(formData);
+            
+            // Update user data
+            const users = JSON.parse(localStorage.getItem('tahsinzeka_users') || '[]');
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            
+            if (userIndex !== -1) {
+                users[userIndex] = { ...users[userIndex], ...userData };
+                localStorage.setItem('tahsinzeka_users', JSON.stringify(users));
+                
+                // Update session
+                const sessionData = { ...currentUser, name: `${userData.firstName} ${userData.lastName}` };
+                localStorage.setItem('tahsinzeka_session', JSON.stringify(sessionData));
+                
+                showAlert('Profil bilgileri güncellendi!', 'success');
+            }
+        });
+        
+        document.getElementById('security-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const { currentPassword, newPassword, confirmPassword } = Object.fromEntries(formData);
+            
+            // Validate passwords
+            if (newPassword !== confirmPassword) {
+                showAlert('Yeni şifreler eşleşmiyor!', 'error');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                showAlert('Yeni şifre en az 8 karakter olmalıdır!', 'error');
+                return;
+            }
+            
+            // Update password
+            const users = JSON.parse(localStorage.getItem('tahsinzeka_users') || '[]');
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            
+            if (userIndex !== -1) {
+                users[userIndex].password = newPassword;
+                localStorage.setItem('tahsinzeka_users', JSON.stringify(users));
+                showAlert('Şifre başarıyla güncellendi!', 'success');
+                this.reset();
+            }
+        });
+        
+        // Reset form
+        function resetForm(formId) {
+            document.getElementById(formId).reset();
+        }
+        
+        // Show alert
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alert-container');
+            const alertClass = type === 'success' ? 'alert-success' : 'alert-error';
+            const icon = type === 'success' ? '✅' : '❌';
+            
+            const alert = document.createElement('div');
+            alert.className = `alert ${alertClass}`;
+            alert.innerHTML = `
+                <span>${icon}</span>
+                <span>${message}</span>
+            `;
+            
+            alertContainer.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+        
+        // Avatar upload
+        document.getElementById('avatar-input').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatar = document.querySelector('.profile-avatar');
+                    avatar.innerHTML = `
+                        <img src="${e.target.result}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                        <div class="avatar-upload">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 5v14m7-7H5"></path>
+                            </svg>
+                        </div>
+                    `;
+                };
+                reader.readAsDataURL(file);
+                showAlert('Profil fotoğrafı güncellendi!', 'success');
+            }
+        });
+    </script>
+</body>
+</html>

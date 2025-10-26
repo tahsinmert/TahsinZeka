@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesap Oluştur - TahsinZeka</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="tahsinzeka-logo.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+        
+        .logo-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        
+        .logo-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-container {
+            margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        
+        .form-group.full-width {
+            flex: none;
+            width: 100%;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #10a37f;
+            box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: #999;
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 18px;
+            padding: 4px;
+        }
+        
+        .password-toggle:hover {
+            color: #10a37f;
+        }
+        
+        .password-strength {
+            margin-top: 8px;
+            font-size: 12px;
+        }
+        
+        .strength-bar {
+            height: 4px;
+            background: #e1e5e9;
+            border-radius: 2px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+        
+        .strength-fill {
+            height: 100%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .strength-weak { background: #ff4757; width: 25%; }
+        .strength-fair { background: #ffa502; width: 50%; }
+        .strength-good { background: #2ed573; width: 75%; }
+        .strength-strong { background: #1e90ff; width: 100%; }
+        
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .terms-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #10a37f;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        
+        .terms-checkbox a {
+            color: #10a37f;
+            text-decoration: none;
+        }
+        
+        .terms-checkbox a:hover {
+            text-decoration: underline;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #10a37f, #0d8a6b);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 163, 127, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+        
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 15px;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .social-btn:hover {
+            border-color: #10a37f;
+            color: #10a37f;
+        }
+        
+        .switch-form {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .switch-form a {
+            color: #10a37f;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .switch-form a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border: 1px solid #fcc;
+        }
+        
+        .success-message {
+            background: #efe;
+            color: #363;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border: 1px solid #cfc;
+        }
+        
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .loading .submit-btn {
+            background: #ccc;
+        }
+        
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .logo-title {
+                font-size: 24px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="logo-section">
+            <img src="tahsinzeka-logo.png" alt="TahsinZeka Logo" class="logo">
+            <h1 class="logo-title">TahsinZeka</h1>
+            <p class="logo-subtitle">Hesabınızı Oluşturun</p>
+        </div>
+        
+        <div id="error-message" class="error-message" style="display: none;"></div>
+        <div id="success-message" class="success-message" style="display: none;"></div>
+        
+        <form id="registerForm" class="form-container">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName" class="form-label">Ad</label>
+                    <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Adınız" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName" class="form-label">Soyad</label>
+                    <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Soyadınız" required>
+                </div>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="email" class="form-label">E-posta Adresi</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="ornek@email.com" required>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="password" class="form-label">Şifre</label>
+                <div class="password-container">
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Güçlü bir şifre oluşturun" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
+                </div>
+                <div class="password-strength">
+                    <div id="strength-text">Şifre gücü</div>
+                    <div class="strength-bar">
+                        <div id="strength-fill" class="strength-fill"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="confirmPassword" class="form-label">Şifre Tekrar</label>
+                <div class="password-container">
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="Şifrenizi tekrar girin" required>
+                    <button type="button" class="password-toggle" onclick="toggleConfirmPassword()">👁️</button>
+                </div>
+            </div>
+            
+            <div class="terms-checkbox">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">
+                    <a href="#" onclick="showTerms()">Kullanım Koşulları</a> ve 
+                    <a href="#" onclick="showPrivacy()">Gizlilik Politikası</a>'nı okudum ve kabul ediyorum.
+                </label>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>Hesap Oluştur</button>
+        </form>
+        
+        <div class="divider">
+            <span>veya</span>
+        </div>
+        
+        <div class="social-login">
+            <a href="#" class="social-btn" onclick="socialRegister('google')">
+                <span>🔍</span>
+                <span>Google</span>
+            </a>
+            <a href="#" class="social-btn" onclick="socialRegister('github')">
+                <span>🐙</span>
+                <span>GitHub</span>
+            </a>
+        </div>
+        
+        <div class="switch-form">
+            <span>Zaten hesabınız var mı? </span>
+            <a href="login.html">Giriş yapın</a>
+        </div>
+    </div>
+
+    <script>
+        // Password toggle functionality
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
+        
+        function toggleConfirmPassword() {
+            const passwordInput = document.getElementById('confirmPassword');
+            const toggleBtn = document.querySelectorAll('.password-toggle')[1];
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
+        
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            let strengthText = '';
+            
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            const strengthFill = document.getElementById('strength-fill');
+            const strengthTextEl = document.getElementById('strength-text');
+            
+            strengthFill.className = 'strength-fill';
+            
+            switch (strength) {
+                case 0:
+                case 1:
+                    strengthFill.classList.add('strength-weak');
+                    strengthText = 'Çok zayıf';
+                    break;
+                case 2:
+                    strengthFill.classList.add('strength-fair');
+                    strengthText = 'Zayıf';
+                    break;
+                case 3:
+                    strengthFill.classList.add('strength-good');
+                    strengthText = 'İyi';
+                    break;
+                case 4:
+                case 5:
+                    strengthFill.classList.add('strength-strong');
+                    strengthText = 'Güçlü';
+                    break;
+            }
+            
+            strengthTextEl.textContent = `Şifre gücü: ${strengthText}`;
+        }
+        
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+        }
+        
+        // Show success message
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+        }
+        
+        // Hide messages
+        function hideMessages() {
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        }
+        
+        // Form validation
+        function validateForm(formData) {
+            const { firstName, lastName, email, password, confirmPassword, terms } = formData;
+            
+            if (!firstName || !lastName || !email || !password || !confirmPassword) {
+                showError('Lütfen tüm alanları doldurun.');
+                return false;
+            }
+            
+            if (firstName.length < 2 || lastName.length < 2) {
+                showError('Ad ve soyad en az 2 karakter olmalıdır.');
+                return false;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Lütfen geçerli bir e-posta adresi girin.');
+                return false;
+            }
+            
+            if (password.length < 8) {
+                showError('Şifre en az 8 karakter olmalıdır.');
+                return false;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('Şifreler eşleşmiyor.');
+                return false;
+            }
+            
+            if (!terms) {
+                showError('Lütfen kullanım koşullarını kabul edin.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Check if email already exists
+        function emailExists(email) {
+            const users = JSON.parse(localStorage.getItem('tahsinzeka_users') || '[]');
+            return users.some(user => user.email === email);
+        }
+        
+        // Register form submission
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                password: document.getElementById('password').value,
+                confirmPassword: document.getElementById('confirmPassword').value,
+                terms: document.getElementById('terms').checked
+            };
+            
+            hideMessages();
+            
+            if (!validateForm(formData)) {
+                return;
+            }
+            
+            if (emailExists(formData.email)) {
+                showError('Bu e-posta adresi zaten kullanılıyor.');
+                return;
+            }
+            
+            // Show loading state
+            const form = document.getElementById('registerForm');
+            form.classList.add('loading');
+            
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Create new user
+                const newUser = {
+                    id: Date.now().toString(),
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    name: `${formData.firstName} ${formData.lastName}`,
+                    email: formData.email,
+                    password: formData.password,
+                    createdAt: new Date().toISOString()
+                };
+                
+                // Save user to localStorage
+                const users = JSON.parse(localStorage.getItem('tahsinzeka_users') || '[]');
+                users.push(newUser);
+                localStorage.setItem('tahsinzeka_users', JSON.stringify(users));
+                
+                showSuccess('Hesabınız başarıyla oluşturuldu! Giriş sayfasına yönlendiriliyorsunuz...');
+                
+                // Redirect to login page
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                
+            } catch (error) {
+                showError('Hesap oluşturma sırasında bir hata oluştu. Lütfen tekrar deneyin.');
+            } finally {
+                form.classList.remove('loading');
+            }
+        });
+        
+        // Real-time validation
+        document.getElementById('password').addEventListener('input', function() {
+            checkPasswordStrength(this.value);
+            updateSubmitButton();
+        });
+        
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            updateSubmitButton();
+        });
+        
+        document.getElementById('terms').addEventListener('change', function() {
+            updateSubmitButton();
+        });
+        
+        // Update submit button state
+        function updateSubmitButton() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (password.length >= 8 && password === confirmPassword && terms) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+        
+        // Social register
+        function socialRegister(provider) {
+            showSuccess(`${provider.charAt(0).toUpperCase() + provider.slice(1)} ile kayıt olunuyor...`);
+            // In a real app, this would redirect to OAuth provider
+        }
+        
+        // Terms and Privacy
+        function showTerms() {
+            alert('Kullanım Koşulları:\n\n1. TahsinZeka hizmetlerini kullanarak bu koşulları kabul etmiş olursunuz.\n2. Hizmeti yasal amaçlarla kullanmalısınız.\n3. Hesap bilgilerinizi güvenli tutmalısınız.\n4. Tahsin Mert Mutlu bu hizmeti sağlamaktadır.');
+        }
+        
+        function showPrivacy() {
+            alert('Gizlilik Politikası:\n\n1. Kişisel bilgileriniz güvenli şekilde saklanır.\n2. Bilgileriniz üçüncü taraflarla paylaşılmaz.\n3. Verileriniz sadece hizmet kalitesini artırmak için kullanılır.\n4. İstediğiniz zaman hesabınızı silebilirsiniz.');
+        }
+        
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            const session = localStorage.getItem('tahsinzeka_session') || sessionStorage.getItem('tahsinzeka_session');
+            if (session) {
+                showSuccess('Zaten giriş yapmışsınız. Ana sayfaya yönlendiriliyorsunuz...');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>
